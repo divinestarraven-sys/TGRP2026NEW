@@ -26,7 +26,7 @@ const MyceliumMembership = lazy(() => import('./pages/MyceliumMembership'));
 
 function App() {
   const location = useLocation();
-    <AmbientAudioPlayer />
+
   return (
     <Layout>
       <ScrollToTop />
@@ -67,4 +67,5 @@ function App() {
     </Layout>
   );
 }
+<AmbientAudioPlayer />
 export default App;
