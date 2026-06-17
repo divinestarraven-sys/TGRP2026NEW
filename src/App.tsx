@@ -6,7 +6,6 @@ import LoadingScreen from './components/LoadingScreen';
 import ScrollToTop from './components/ScrollToTop';
 import AmbientAudioPlayer from './components/AmbientAudioPlayer';
 
-</> src/App.tsx
 const Home = lazy(() => import('./pages/Home'));
 const Framework = lazy(() => import('./pages/Framework'));
 const Pillars = lazy(() => import('./pages/Pillars'));
