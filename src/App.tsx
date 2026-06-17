@@ -4,6 +4,9 @@ import { lazy, Suspense } from 'react';
 import Layout from './components/Layout';
 import LoadingScreen from './components/LoadingScreen';
 import ScrollToTop from './components/ScrollToTop';
+import AmbientAudioPlayer from './components/AmbientAudioPlayer';
+
+src/App.tsx
 
 const Home = lazy(() => import('./pages/Home'));
 const Framework = lazy(() => import('./pages/Framework'));
@@ -66,5 +69,5 @@ function App() {
     </Layout>
   );
 }
-
+<AmbientAudioPlayer />
 export default App;
