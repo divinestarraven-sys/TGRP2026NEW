@@ -5,7 +5,7 @@ import Layout from './components/Layout';
 import LoadingScreen from './components/LoadingScreen';
 import ScrollToTop from './components/ScrollToTop';
 import AmbientAudioPlayer from './components/AmbientAudioPlayer';
-<AmbientAudioPlayer />
+
 const Home = lazy(() => import('./pages/Home'));
 const Framework = lazy(() => import('./pages/Framework'));
 const Pillars = lazy(() => import('./pages/Pillars'));
@@ -26,7 +26,7 @@ const MyceliumMembership = lazy(() => import('./pages/MyceliumMembership'));
 
 function App() {
   const location = useLocation();
-
+    <AmbientAudioPlayer />
   return (
     <Layout>
       <ScrollToTop />
