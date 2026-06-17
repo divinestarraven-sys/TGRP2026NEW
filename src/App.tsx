@@ -65,7 +65,7 @@ function App() {
         </Suspense>
       </AnimatePresence>
     </Layout>
+    <AmbientAudioPlayer />
   );
 }
-<AmbientAudioPlayer />
 export default App;
