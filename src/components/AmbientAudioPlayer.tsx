@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Volume2, VolumeX, Music } from 'lucide-react';
-
+import AmbientAudioPlayer from './components/AmbientAudioPlayer';
+src/App.tsx
 const AUDIO_FILE = '/audio/01-main-bgm.mp3';
 
 export default function AmbientAudioPlayer() {
