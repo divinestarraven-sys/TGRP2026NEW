@@ -420,11 +420,13 @@ export default function Pillars() {
       {/* Pillars Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/06-green-resonance-framework-six-pillars-maxres.png',
-          '/Gallery/04-six-pillars-latest-update.png',
-          '/Gallery/05-six-pillars-rhythmic-weave-edition.png',
+          '/Gallery/04-six-pillars-latest-update.jpg',
+          '/Gallery/05-six-pillars-rhythmic-weave-edition.jpg',
+          '/Gallery/06-green-resonance-framework-six-pillars-maxres.jpg',
+          '/Gallery/13-six-pillars-daily-practice-cards.jpg',
+          '/Gallery/14-six-pillars-portal-keys-expanded.jpg',
         ]}
-        limit={3}
+        limit={5}
         title="The Six Pillars — Visualized"
         subtitle="Framework diagrams for the six foundational pillars of the Green Resonance"
       />

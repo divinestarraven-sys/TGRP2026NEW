@@ -64,8 +64,10 @@ function App() {
           </Routes>
         </Suspense>
       </AnimatePresence>
+
+      <AmbientAudioPlayer />
     </Layout>
   );
 }
-<AmbientAudioPlayer />
+
 export default App;

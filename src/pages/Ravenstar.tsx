@@ -15,6 +15,8 @@ import {
   Music,
   Moon,
   Footprints,
+  Flame,
+  Sparkles,
   ArrowRight,
 } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
@@ -62,56 +64,91 @@ const ravenstarFunctions = [
   },
 ];
 
-const ravenstarSubsystems = [
-  {
-    title: 'The Observatory',
-    subtitle: 'pattern recognition and macro-awareness',
-    desc: 'The high vantage from which the whole pattern becomes visible. From the Observatory, we perceive the movements of systems, the tides of culture, and the slow arcs of transformation that are invisible from the ground. It is the place of long sight.',
-    icon: Telescope,
-    color: 'indigo',
-  },
-  {
-    title: 'The Signal Archives',
-    subtitle: 'memory, oral history, symbolic transmission',
-    desc: 'Where the signals of ages past are preserved, catalogued, and made accessible. The Archives hold the oral histories, the mythic encodings, and the symbolic keys that allow truth to survive the corrosion of time. Memory is not nostalgia — it is navigation data.',
-    icon: Archive,
-    color: 'gold',
-  },
-  {
-    title: 'The Stormwatch Tower',
-    subtitle: 'crisis literacy and nervous system resilience',
-    desc: 'The place from which we learn to read the weather — both inner and outer. Stormwatch teaches us that crisis is not aberration but pattern, and that a regulated nervous system is the first instrument of survival. We do not fear the storm; we learn its language.',
-    icon: AlertTriangle,
-    color: 'violet',
-  },
+const mythicSubsystems = [
   {
     title: 'The Mythic Compass',
-    subtitle: 'archetypes, symbolism, sacred geometry',
-    desc: 'The Compass does not point north — it points toward meaning. Through archetypes, sacred geometry, and symbolic literacy, the Mythic Compass orients us in the landscape of the soul. It is the instrument by which we navigate the invisible territories.',
+    subtitle: 'Archetypal orientation, mythology, dreams, sacred geometry, tarot, folklore, synchronicity, and symbolic pattern recognition.',
+    desc: 'The Compass does not point north \u2014 it points toward meaning. Through archetypes, sacred geometry, and symbolic literacy, the Mythic Compass orients us in the landscape of the soul. It is the instrument by which we navigate the invisible territories.',
     icon: Navigation,
     color: 'indigo',
   },
   {
-    title: 'The Ember Choir',
-    subtitle: 'voice, storytelling, resonance, atmosphere',
-    desc: 'Where signal becomes song. The Ember Choir is the subsystem of transmission through voice, story, and atmospheric resonance. It teaches that how we carry the signal matters as much as the signal itself. A truth told without resonance is a seed on stone.',
-    icon: Music,
+    title: 'The Signal Archives',
+    subtitle: 'Mythic conversations, dreams, poems, oral history, field notes, symbolic reflections, music, and living memory.',
+    desc: 'Where the signals of ages past are preserved, catalogued, and made accessible. The Archives hold the oral histories, the mythic encodings, and the symbolic keys that allow truth to survive the corrosion of time. Memory is not nostalgia \u2014 it is navigation data.',
+    icon: Archive,
     color: 'gold',
   },
   {
     title: 'The Night Garden',
-    subtitle: 'shadow work and emotional composting',
-    desc: 'The garden that grows in darkness. The Night Garden is where the unresolved, the suppressed, and the unspoken are brought not for judgment but for composting. Shadow is not enemy — it is fertile ground. What we refuse to see will grow wild; what we tend in darkness becomes medicine.',
+    subtitle: 'Shadow work, grief literacy, emotional composting, ego observation, humility, honesty, and sacred descent.',
+    desc: 'The garden that grows in darkness. The Night Garden is where the unresolved, the suppressed, and the unspoken are brought not for judgment but for composting. Shadow is not enemy \u2014 it is fertile ground. What we refuse to see will grow wild; what we tend in darkness becomes medicine.',
     icon: Moon,
     color: 'violet',
   },
   {
-    title: 'The Featherpath',
-    subtitle: 'pilgrimage, wandering, living myth',
-    desc: 'The path that is found by walking it. The Featherpath is the subsystem of embodied journey — pilgrimage, wandering, and the practice of living myth. It teaches that some coordinates can only be discovered in motion, and that the myth is not the story we tell but the road we walk.',
-    icon: Footprints,
+    title: 'The Phoenix Principle',
+    subtitle: 'Transformation, fire, sacrifice, regeneration, refinement, release, and embodied change.',
+    desc: 'Destruction is not the opposite of creation \u2014 it is its prerequisite. The Phoenix does not rise despite the fire; it rises because of it. Burn what is false. Protect what is true. Rise in alignment. The Phoenix Principle is the subsystem of sacred destruction and conscious rebirth.',
+    icon: Flame,
+    color: 'gold',
+  },
+  {
+    title: 'The Ember Choir',
+    subtitle: 'Voice, storytelling, poetry, music, teaching, chanting, atmosphere, and resonant transmission.',
+    desc: 'Where signal becomes song. The Ember Choir is the subsystem of transmission through voice, story, and atmospheric resonance. It teaches that how we carry the signal matters as much as the signal itself. A truth told without resonance is a seed on stone.',
+    icon: Music,
     color: 'indigo',
   },
+  {
+    title: 'The Featherpath',
+    subtitle: 'Pilgrimage, wandering, landscape mythology, travel, ecological observation, and living initiation.',
+    desc: 'The path that is found by walking it. The Featherpath is the subsystem of embodied journey \u2014 pilgrimage, wandering, and the practice of living myth. It teaches that some coordinates can only be discovered in motion, and that the myth is not the story we tell but the road we walk.',
+    icon: Footprints,
+    color: 'gold',
+  },
+  {
+    title: 'The Rhythmic Weave',
+    subtitle: 'Creativity, synchronicity, MoiraMUSEment, sacred play, rhythm, reciprocity, beauty, and harmonic living.',
+    desc: 'The connective tissue that binds all subsystems into a living whole. The Rhythmic Weave is the recognition that all systems \u2014 ecological, social, cosmic \u2014 are rhythmic, and that creativity, play, and synchronicity are the instruments by which we attune to the deeper pattern.',
+    icon: Sparkles,
+    color: 'indigo',
+  },
+];
+
+const supportingSystems = [
+  {
+    title: 'The Observatory',
+    subtitle: 'pattern recognition and macro-awareness',
+    desc: 'The high vantage from which the whole pattern becomes visible. From the Observatory, we perceive the movements of systems, the tides of culture, and the slow arcs of transformation that are invisible from the ground.',
+    icon: Telescope,
+    color: 'indigo',
+  },
+  {
+    title: 'The Stormwatch Tower',
+    subtitle: 'crisis literacy and nervous system resilience',
+    desc: 'The place from which we learn to read the weather \u2014 both inner and outer. Stormwatch teaches us that crisis is not aberration but pattern, and that a regulated nervous system is the first instrument of survival.',
+    icon: AlertTriangle,
+    color: 'violet',
+  },
+];
+
+const ethicalProtocol = [
+  'Myths are symbolic mirrors, not unquestionable truth claims.',
+  'Archetypes should refine behaviour, not inflate ego.',
+  'Shadow work requires humility, honesty, compassion, and grounded action.',
+  'Symbolic material must not replace practical responsibility.',
+  'Symbolic practices must not replace medical care, mental-health care, legal advice, or real-world accountability.',
+  'Personal mythology must not be used to claim superiority over others.',
+  'Every symbol must return to service, nature, truth, compassion, integrity, and the greater good of life.',
+];
+
+const dailyPractice = [
+  { time: 'Morning', prompt: 'What archetype is active in me today?' },
+  { time: 'Midday', prompt: 'Am I acting from wisdom, wound, ego, fear, or service?' },
+  { time: 'Evening', prompt: 'What pattern repeated today, and what did it teach me?' },
+  { time: 'Weekly', prompt: 'Write one Signal Archives entry.' },
+  { time: 'Monthly / New Moon', prompt: 'Complete one Night Garden reflection and one Phoenix release practice.' },
 ];
 
 const colorMap: Record<string, { bg: string; text: string; border: string; glow: string }> = {
@@ -262,20 +299,43 @@ export default function Ravenstar() {
         </div>
       </section>
 
-      {/* Subsystems */}
+      {/* Mythic Intelligence Codex */}
       <section className="section-padding relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black via-violet-950/10 to-cosmic-black" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black via-amber-950/8 to-cosmic-black" />
         <div className="container-sacred relative z-10">
           <SectionHeading
-            title="The Seven Subsystems"
-            subtitle="Each subsystem is a chamber of the observatory — a specialized instrument for reading a different band of the signal."
+            title="Ravenstar Mythic Intelligence Codex"
+            subtitle="The symbolic navigation layer of The Green Resonance Project"
           />
 
-          <div className="space-y-5">
-            {ravenstarSubsystems.map((sub, i) => {
+          <div className="max-w-3xl mx-auto mb-16">
+            <GlassCard gold className="p-8 sm:p-10 text-center">
+              <Eye className="w-8 h-8 text-amber-400 mx-auto mb-4" />
+              <p className="font-display text-xl sm:text-2xl tracking-wider bg-gradient-to-r from-amber-300 to-emerald-300 bg-clip-text text-transparent mb-6">
+                "Myth is a mirror, not a prison."
+              </p>
+              <p className="font-body text-moonlight-white/50 leading-relaxed text-sm sm:text-base">
+                The Ravenstar Mythic Intelligence Codex is the symbolic navigation layer of The Green Resonance Project. It gathers mythological reflection, archetypal wisdom, dream symbolism, oracle dialogue, shadow work, sacred storytelling, poetic transmission, and personal transformation into one grounded reflective system. It does not present myth as unquestionable doctrine. It uses myth as a mirror for pattern recognition, ethical imagination, emotional composting, creativity, and grounded action.
+              </p>
+            </GlassCard>
+          </div>
+
+          {/* 7 Mythic Intelligence Subsystems */}
+          <motion.h3
+            className="font-display text-xl sm:text-2xl tracking-wider text-center text-gradient-emerald mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            The 7 Mythic Intelligence Subsystems
+          </motion.h3>
+
+          <div className="space-y-5 mb-16">
+            {mythicSubsystems.map((sub, i) => {
               const colors = colorMap[sub.color];
               return (
-                <GlassCard key={sub.title} delay={i * 0.1} className="p-6 sm:p-8 group">
+                <GlassCard key={sub.title} delay={i * 0.08} className="p-6 sm:p-8 group">
                   <div className="flex flex-col sm:flex-row gap-5 sm:gap-6">
                     <div
                       className={`w-14 h-14 rounded-xl ${colors.bg} flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-300`}
@@ -302,6 +362,115 @@ export default function Ravenstar() {
                 </GlassCard>
               );
             })}
+          </div>
+
+          {/* Supporting Systems */}
+          <motion.h3
+            className="font-display text-lg tracking-wider text-center text-moonlight-white/50 mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Supporting Ravenstar Systems
+          </motion.h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16 max-w-3xl mx-auto">
+            {supportingSystems.map((sub, i) => {
+              const colors = colorMap[sub.color];
+              return (
+                <GlassCard key={sub.title} delay={i * 0.1} className="p-5 group">
+                  <div className="flex items-start gap-4">
+                    <div className={`w-10 h-10 rounded-xl ${colors.bg} flex items-center justify-center shrink-0`}>
+                      <sub.icon className={`w-5 h-5 ${colors.text}`} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-display text-sm tracking-wider text-moonlight-white mb-1">{sub.title}</h4>
+                      <p className={`font-display text-xs tracking-wider ${colors.text} mb-2`}>{sub.subtitle}</p>
+                      <p className="font-body text-moonlight-white/35 text-xs leading-relaxed">{sub.desc}</p>
+                    </div>
+                  </div>
+                </GlassCard>
+              );
+            })}
+          </div>
+
+          {/* Ethical Safety Protocol */}
+          <div className="max-w-3xl mx-auto mb-16">
+            <motion.h3
+              className="font-display text-xl sm:text-2xl tracking-wider text-center text-gradient-emerald mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              Ethical Safety Protocol for Mythic Work
+            </motion.h3>
+            <GlassCard className="p-6 sm:p-8">
+              <div className="flex items-center gap-3 mb-5">
+                <Shield className="w-6 h-6 text-emerald-glow" />
+                <span className="font-display text-sm tracking-widest text-emerald-glow/80">SACRED BOUNDARIES</span>
+              </div>
+              <ul className="space-y-3 mb-6">
+                {ethicalProtocol.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    className="flex items-start gap-3"
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.06 }}
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-glow/60 mt-2 shrink-0" />
+                    <p className="font-body text-moonlight-white/50 text-sm leading-relaxed">{item}</p>
+                  </motion.li>
+                ))}
+              </ul>
+              <p className="font-body text-moonlight-white/30 text-xs leading-relaxed italic">
+                Frame mythic, alchemical, planetary, chakra, divination, and esoteric material as symbolic, philosophical, artistic, contemplative, historical, and reflective. Do not present it as scientific proof or guaranteed supernatural fact.
+              </p>
+            </GlassCard>
+          </div>
+
+          {/* Daily Mythic Intelligence Practice */}
+          <div className="max-w-3xl mx-auto mb-16">
+            <motion.h3
+              className="font-display text-xl sm:text-2xl tracking-wider text-center text-gradient-gold mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              Daily Mythic Intelligence Practice
+            </motion.h3>
+            <div className="space-y-3">
+              {dailyPractice.map((item, i) => (
+                <GlassCard key={i} delay={i * 0.06} className="p-4 sm:p-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <span className="font-display text-xs tracking-widest text-amber-400/80 sm:w-36 shrink-0 uppercase">
+                      {item.time}
+                    </span>
+                    <p className="font-sacred text-moonlight-white/55 text-sm italic leading-relaxed">
+                      "{item.prompt}"
+                    </p>
+                  </div>
+                </GlassCard>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link
+              to="/codex"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-amber-400/15 border border-amber-400/25 hover:bg-amber-400/25 transition-all font-display text-sm tracking-widest text-amber-400"
+            >
+              Enter the Ravenstar Codex
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/codex"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-glow/15 border border-emerald-glow/25 hover:bg-emerald-glow/25 transition-all font-display text-sm tracking-widest text-emerald-glow"
+            >
+              Explore Mythic Intelligence
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -343,10 +512,11 @@ export default function Ravenstar() {
       {/* Ravenstar Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/07-keys-to-the-kingdom-keys.png',
-          '/Gallery/08-keys-to-the-kingdom-master-map.png',
+          '/Gallery/07-keys-to-the-kingdom-keys.jpg',
+          '/Gallery/08-keys-to-the-kingdom-master-map.jpg',
+          '/Gallery/12-keys-to-the-kingdom-symbolic-map.jpg',
         ]}
-        limit={2}
+        limit={3}
         title="Keys to The Kingdom"
         subtitle="Symbolic system maps and navigational keys"
       />

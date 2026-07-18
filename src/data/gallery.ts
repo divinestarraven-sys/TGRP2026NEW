@@ -20,8 +20,15 @@ export type GalleryCategory =
 // Keep the capital G consistent: Linux/Bolt hosting is case-sensitive.
 export const GALLERY_BASE_PATH = '/Gallery';
 
-// Add future gallery uploads here after placing optimized .jpg files in /public/Gallery.
-// Use JPG for photographic/poster artwork to keep the Bolt project lightweight.
+/**
+ * HOW TO ADD A FUTURE IMAGE:
+ * 1. Convert the image to optimized JPG (or JPEG).
+ * 2. Put it in public/Gallery/.
+ * 3. Use a lowercase, hyphenated filename (e.g. 15-new-artwork-title.jpg).
+ * 4. Add one GalleryImage object below with src, alt, title, category, description.
+ * 5. Choose an existing GalleryCategory or add a new one to the type above.
+ * 6. Run `npm run typecheck` and `npm run build` to confirm.
+ */
 export const galleryImages: GalleryImage[] = [
   {
     src: `${GALLERY_BASE_PATH}/01-best-new-garden-map.jpg`,

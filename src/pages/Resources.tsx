@@ -7,6 +7,12 @@ import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
 import GalleryShowcase from '../components/GalleryShowcase';
 
+const resourceColorMap: Record<string, { bg: string; text: string }> = {
+  'emerald-glow': { bg: 'bg-emerald-glow/10', text: 'text-emerald-glow' },
+  'cyan-glow': { bg: 'bg-cyan-glow/10', text: 'text-cyan-glow' },
+  'gold-sacred': { bg: 'bg-gold-sacred/10', text: 'text-gold-sacred' },
+};
+
 const categories = [
   {
     title: 'Sacred Texts & Writings',
@@ -66,7 +72,7 @@ export default function Resources() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[55vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black via-emerald-deep/15 to-cosmic-black" />
         <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -94,7 +100,7 @@ export default function Resources() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            The Library
+            Resource Library
           </motion.h1>
 
           <motion.p
@@ -103,7 +109,7 @@ export default function Resources() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            Writings, practices, tools, and media for the regenerative path.
+            Texts, media, tools, and guides for the regenerative path. A curated collection of resources aligned with The Green Resonance Framework.
           </motion.p>
         </div>
       </section>
@@ -112,32 +118,19 @@ export default function Resources() {
       <section className="section-padding">
         <div className="container-sacred">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {categories.map((category, i) => (
-              <GlassCard key={category.title} delay={i * 0.1} className="p-6 sm:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className={`w-10 h-10 rounded-xl bg-${category.color}/10 flex items-center justify-center`}>
-                    <category.icon className={`w-5 h-5 text-${category.color}`} />
+            {categories.map((category, i) => {
+              const colors = resourceColorMap[category.color];
+              return (
+                <GlassCard key={category.title} delay={i * 0.1} className="p-6 sm:p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className={`w-10 h-10 rounded-xl ${colors.bg} flex items-center justify-center`}>
+                      <category.icon className={`w-5 h-5 ${colors.text}`} />
+                    </div>
+                    <h3 className="font-display text-lg tracking-wider text-moonlight-white">{category.title}</h3>
                   </div>
-                  <h3 className="font-display text-lg tracking-wider text-moonlight-white">{category.title}</h3>
-                </div>
-                <div className="space-y-3">
-                  {category.items.map((item) => {
-                    const content = (
-                      <>
-                        <div>
-                          <p className="font-body text-sm text-moonlight-white/70 group-hover:text-emerald-glow transition-colors">
-                            {item.title}
-                          </p>
-                          <span className="text-xs text-moonlight-white/20 font-display tracking-wider">{item.type}</span>
-                        </div>
-                        <ExternalLink className="w-4 h-4 text-moonlight-white/10 group-hover:text-emerald-glow/40 transition-colors shrink-0" />
-                      </>
-                    );
-                    return (
-                      <motion.div
-                        key={item.title}
-                        whileHover={{ x: 4 }}
-                      >
+                  <div className="space-y-3">
+                    {category.items.map((item) => (
+                      <motion.div key={item.title} whileHover={{ x: item.url ? 4 : 0 }}>
                         {item.url ? (
                           <a
                             href={item.url}
@@ -145,24 +138,35 @@ export default function Resources() {
                             rel="noopener noreferrer"
                             className="flex items-center justify-between p-3 rounded-lg hover:bg-emerald-glow/5 transition-colors cursor-pointer group"
                           >
-                            {content}
+                            <div>
+                              <p className="font-body text-sm text-moonlight-white/70 group-hover:text-emerald-glow transition-colors">
+                                {item.title}
+                              </p>
+                              <span className="text-xs text-moonlight-white/20 font-display tracking-wider">{item.type}</span>
+                            </div>
+                            <ExternalLink className="w-4 h-4 text-moonlight-white/10 group-hover:text-emerald-glow/40 transition-colors shrink-0" />
                           </a>
                         ) : (
-                          <div className="flex items-center justify-between p-3 rounded-lg hover:bg-emerald-glow/5 transition-colors cursor-pointer group">
-                            {content}
+                          <div className="flex items-center justify-between p-3 rounded-lg cursor-default">
+                            <div>
+                              <p className="font-body text-sm text-moonlight-white/50">
+                                {item.title}
+                              </p>
+                              <span className="text-xs text-moonlight-white/20 font-display tracking-wider">{item.type} &middot; Coming Soon</span>
+                            </div>
                           </div>
                         )}
                       </motion.div>
-                    );
-                  })}
-                </div>
-              </GlassCard>
-            ))}
+                    ))}
+                  </div>
+                </GlassCard>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* External Links */}
+      {/* Allied Networks */}
       <section className="section-padding bg-gradient-to-b from-cosmic-black via-cosmic-deep to-cosmic-black">
         <div className="container-sacred">
           <SectionHeading
@@ -172,11 +176,11 @@ export default function Resources() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
             {externalLinks.map((link, i) => (
-              <GlassCard key={link.title} delay={i * 0.1} className="p-5 group cursor-pointer">
+              <GlassCard key={link.title} delay={i * 0.1} className="p-5 cursor-default">
                 <div className="flex items-center gap-3">
-                  <LinkIcon className="w-4 h-4 text-emerald-glow/40 group-hover:text-emerald-glow transition-colors" />
+                  <LinkIcon className="w-4 h-4 text-emerald-glow/40" />
                   <div>
-                    <h4 className="font-display text-sm tracking-wider text-moonlight-white group-hover:text-emerald-glow transition-colors">
+                    <h4 className="font-display text-sm tracking-wider text-moonlight-white/70">
                       {link.title}
                     </h4>
                     <p className="text-xs text-moonlight-white/30 font-body">{link.desc}</p>
@@ -295,9 +299,9 @@ export default function Resources() {
       {/* Resources Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/10-green-resonance-workbook-cover.png',
-          '/Gallery/07-keys-to-the-kingdom-keys.png',
-          '/Gallery/08-keys-to-the-kingdom-master-map.png',
+          '/Gallery/10-green-resonance-workbook-cover.jpg',
+          '/Gallery/07-keys-to-the-kingdom-keys.jpg',
+          '/Gallery/13-six-pillars-daily-practice-cards.jpg',
         ]}
         limit={3}
         title="Practice Materials"

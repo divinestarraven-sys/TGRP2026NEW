@@ -54,7 +54,7 @@ export default function PhoenixSigilBackground({ className = '' }: Props) {
     const cx = w / 2;
     const cy = h / 2;
     let t = 0;
-    let mouseInfluence = { x: 0, y: 0 };
+    const mouseInfluence = { x: 0, y: 0 };
 
     const handleMouse = (e: MouseEvent) => {
       mouseInfluence.x = (e.clientX - cx) / cx;

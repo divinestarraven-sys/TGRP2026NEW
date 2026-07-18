@@ -7,6 +7,7 @@ import CymaticWaves from '../components/CymaticWaves';
 import MyceliumNetwork from '../components/MyceliumNetwork';
 import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
+import GalleryShowcase from '../components/GalleryShowcase';
 
 const weaveAspects = [
   {
@@ -221,6 +222,17 @@ export default function RhythmicWeave() {
           </GlassCard>
         </div>
       </section>
+
+      <GalleryShowcase
+        srcs={[
+          '/Gallery/05-six-pillars-rhythmic-weave-edition.jpg',
+          '/Gallery/13-six-pillars-daily-practice-cards.jpg',
+          '/Gallery/14-six-pillars-portal-keys-expanded.jpg',
+        ]}
+        limit={3}
+        title="Rhythmic Weave Artwork"
+        subtitle="Practice cards and pillar visualizations for the Rhythmic Weave"
+      />
     </PageTransition>
   );
 }

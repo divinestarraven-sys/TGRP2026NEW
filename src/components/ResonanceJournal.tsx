@@ -31,13 +31,13 @@ export default function ResonanceJournal() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) setEntries(JSON.parse(stored));
-    } catch {}
+    } catch { /* localStorage unavailable */ }
   }, []);
 
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-    } catch {}
+    } catch { /* localStorage unavailable */ }
   }, [entries]);
 
   const addEntry = () => {

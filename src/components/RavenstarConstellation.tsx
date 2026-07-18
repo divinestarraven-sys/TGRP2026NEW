@@ -52,7 +52,7 @@ export default function RavenstarConstellation({ className = '' }: Props) {
     window.addEventListener('resize', resize);
 
     let t = 0;
-    let mouse = { x: w / 2, y: h / 2 };
+    const mouse = { x: w / 2, y: h / 2 };
 
     const handleMouse = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();

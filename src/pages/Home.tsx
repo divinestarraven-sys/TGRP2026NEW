@@ -438,9 +438,9 @@ export default function Home() {
       {/* Featured Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/06-green-resonance-framework-six-pillars-maxres.png',
-          '/Gallery/09-phoenix-master-sigil.png',
-          '/Gallery/01-best-new-garden-map.png',
+          '/Gallery/01-best-new-garden-map.jpg',
+          '/Gallery/03-green-resonance-poster-artwork.jpg',
+          '/Gallery/09-phoenix-master-sigil.jpg',
         ]}
         limit={3}
         title="Visual Resonance"

@@ -66,7 +66,7 @@ export default function BioluminescentField({ className = '', density = 40 }: Pr
     window.addEventListener('resize', resize);
 
     let t = 0;
-    let mouse = { x: w / 2, y: h / 2 };
+    const mouse = { x: w / 2, y: h / 2 };
 
     const handleMouse = (e: MouseEvent) => {
       mouse.x = e.clientX;

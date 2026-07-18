@@ -46,7 +46,7 @@ export default function AuroraEffect({ className = '', intensity = 1, speed = 1 
     window.addEventListener('resize', resize);
 
     let t = 0;
-    let mouse = { x: w / 2, y: h / 2 };
+    const mouse = { x: w / 2, y: h / 2 };
 
     const handleMouse = (e: MouseEvent) => {
       mouse.x = e.clientX;

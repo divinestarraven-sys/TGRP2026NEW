@@ -195,12 +195,11 @@ export default function Framework() {
       {/* Framework Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/06-green-resonance-framework-six-pillars-maxres.png',
-          '/Gallery/07-keys-to-the-kingdom-keys.png',
-          '/Gallery/08-keys-to-the-kingdom-master-map.png',
-          '/Gallery/10-green-resonance-workbook-cover.png',
+          '/Gallery/03-green-resonance-poster-artwork.jpg',
+          '/Gallery/06-green-resonance-framework-six-pillars-maxres.jpg',
+          '/Gallery/12-keys-to-the-kingdom-symbolic-map.jpg',
         ]}
-        limit={4}
+        limit={3}
         title="Framework Visualizations"
         subtitle="Maps, keys, and materials of the Green Resonance system"
       />
