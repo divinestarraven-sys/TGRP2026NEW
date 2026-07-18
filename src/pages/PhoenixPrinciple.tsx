@@ -413,7 +413,7 @@ export default function PhoenixPrinciple() {
 
       {/* Phoenix Gallery */}
       <GalleryShowcase
-        srcs={['/Gallery/09-phoenix-master-sigil.webp']}
+        srcs={['/Gallery/09-phoenix-master-sigil.png']}
         limit={1}
         title="The Phoenix Master Sigil"
         subtitle="Sacred symbol of transformation, rebirth, and conscious regeneration"

@@ -4,12 +4,10 @@ import { Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import SacredGeometry from '../components/SacredGeometry';
 import PageTransition from '../components/PageTransition';
 import GalleryImageCard from '../components/GalleryImageCard';
-import { galleryImages, categoryLabels } from '../data/gallery';
-
-const filterCategories = ['All', 'framework', 'pillars', 'phoenix', 'keys', 'garden', 'resources'];
+import { galleryImages, categoryLabels, galleryCategories } from '../data/gallery';
 
 export default function MediaGallery() {
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState<'All' | string>('All');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filtered = activeCategory === 'All'
@@ -47,7 +45,7 @@ export default function MediaGallery() {
 
   return (
     <PageTransition>
-      {/* ── Hero ── */}
+      {/* Hero */}
       <section className="relative min-h-[55vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black via-emerald-deep/15 to-cosmic-black" />
         <motion.div
@@ -90,12 +88,12 @@ export default function MediaGallery() {
         </div>
       </section>
 
-      {/* ── Filter + Grid ── */}
+      {/* Filter + Grid */}
       <section className="section-padding">
         <div className="container-sacred">
           {/* Category filter */}
           <div className="flex flex-wrap gap-2 justify-center mb-10">
-            {filterCategories.map((cat) => (
+            {galleryCategories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => { setActiveCategory(cat); setLightboxIndex(null); }}
@@ -131,7 +129,7 @@ export default function MediaGallery() {
         </div>
       </section>
 
-      {/* ── Lightbox ── */}
+      {/* Lightbox */}
       <AnimatePresence>
         {lightboxIndex !== null && currentImage && (
           <motion.div
@@ -146,7 +144,6 @@ export default function MediaGallery() {
             aria-modal="true"
             aria-label="Fullscreen image viewer"
           >
-            {/* Close */}
             <button
               className="absolute top-5 right-5 z-10 p-2.5 rounded-full transition-all"
               style={{
@@ -159,7 +156,6 @@ export default function MediaGallery() {
               <X className="w-5 h-5 text-emerald-400" />
             </button>
 
-            {/* Prev */}
             {filtered.length > 1 && (
               <button
                 className="absolute left-3 sm:left-6 z-10 p-2.5 rounded-full transition-all"
@@ -174,7 +170,6 @@ export default function MediaGallery() {
               </button>
             )}
 
-            {/* Image */}
             <motion.div
               className="flex flex-col items-center justify-center px-16 sm:px-20"
               onClick={(e) => e.stopPropagation()}
@@ -212,7 +207,6 @@ export default function MediaGallery() {
               </div>
             </motion.div>
 
-            {/* Next */}
             {filtered.length > 1 && (
               <button
                 className="absolute right-3 sm:right-6 z-10 p-2.5 rounded-full transition-all"

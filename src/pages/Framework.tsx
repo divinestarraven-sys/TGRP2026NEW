@@ -195,10 +195,10 @@ export default function Framework() {
       {/* Framework Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/06-green-resonance-framework-six-pillars-maxres.webp',
-          '/Gallery/07-keys-to-the-kingdom-keys.webp',
-          '/Gallery/08-keys-to-the-kingdom-master-map.webp',
-          '/Gallery/10-green-resonance-workbook-cover.webp',
+          '/Gallery/06-green-resonance-framework-six-pillars-maxres.png',
+          '/Gallery/07-keys-to-the-kingdom-keys.png',
+          '/Gallery/08-keys-to-the-kingdom-master-map.png',
+          '/Gallery/10-green-resonance-workbook-cover.png',
         ]}
         limit={4}
         title="Framework Visualizations"

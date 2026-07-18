@@ -736,10 +736,10 @@ export default function Portals() {
       {/* Portal Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/01-best-new-garden-map.webp',
-          '/Gallery/02-new-green-resonance-garden-map-delta.webp',
-          '/Gallery/07-keys-to-the-kingdom-keys.webp',
-          '/Gallery/08-keys-to-the-kingdom-master-map.webp',
+          '/Gallery/01-best-new-garden-map.png',
+          '/Gallery/02-new-green-resonance-garden-map-delta.png',
+          '/Gallery/07-keys-to-the-kingdom-keys.png',
+          '/Gallery/08-keys-to-the-kingdom-master-map.png',
         ]}
         limit={4}
         title="Portal Maps & Keys"

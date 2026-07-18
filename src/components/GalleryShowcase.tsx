@@ -1,14 +1,18 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import GalleryImageCard from './GalleryImageCard';
-import { galleryImages, GalleryImage } from '../data/gallery';
+import {
+  galleryImages,
+  GalleryImage,
+  findGalleryImageBySrc,
+} from '../data/gallery';
 
 interface GalleryShowcaseProps {
   title?: string;
   subtitle?: string;
   category?: string;
-  /** Override with specific image src paths to show */
+  /** Override with specific image src paths to show. Old .png paths still resolve to the new .jpg files. */
   srcs?: string[];
   limit?: number;
   linkToGallery?: boolean;
@@ -22,11 +26,12 @@ export default function GalleryShowcase({
   limit = 3,
   linkToGallery = true,
 }: GalleryShowcaseProps) {
+  const navigate = useNavigate();
   let images: GalleryImage[] = [];
 
   if (srcs && srcs.length > 0) {
     images = srcs
-      .map((s) => galleryImages.find((img) => img.src === s))
+      .map((s) => findGalleryImageBySrc(s))
       .filter((img): img is GalleryImage => img !== undefined)
       .slice(0, limit);
   } else if (category) {
@@ -77,6 +82,9 @@ export default function GalleryShowcase({
               image={image}
               index={i}
               eager={i === 0}
+              actionLabel="Open gallery"
+              showExpandIcon={false}
+              onClick={() => navigate('/gallery')}
             />
           ))}
         </div>

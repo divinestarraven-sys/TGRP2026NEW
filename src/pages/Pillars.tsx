@@ -420,9 +420,9 @@ export default function Pillars() {
       {/* Pillars Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/06-green-resonance-framework-six-pillars-maxres.webp',
-          '/Gallery/04-six-pillars-latest-update.webp',
-          '/Gallery/05-six-pillars-rhythmic-weave-edition.webp',
+          '/Gallery/06-green-resonance-framework-six-pillars-maxres.png',
+          '/Gallery/04-six-pillars-latest-update.png',
+          '/Gallery/05-six-pillars-rhythmic-weave-edition.png',
         ]}
         limit={3}
         title="The Six Pillars — Visualized"
