@@ -10,7 +10,6 @@ import {
   Scan,
   Eye,
   Archive,
-  AlertTriangle,
   Navigation,
   Music,
   Moon,
@@ -64,52 +63,52 @@ const ravenstarFunctions = [
 
 const ravenstarSubsystems = [
   {
-    title: 'The Observatory',
-    subtitle: 'pattern recognition and macro-awareness',
-    desc: 'The high vantage from which the whole pattern becomes visible. From the Observatory, we perceive the movements of systems, the tides of culture, and the slow arcs of transformation that are invisible from the ground. It is the place of long sight.',
-    icon: Telescope,
-    color: 'indigo',
-  },
-  {
-    title: 'The Signal Archives',
-    subtitle: 'memory, oral history, symbolic transmission',
-    desc: 'Where the signals of ages past are preserved, catalogued, and made accessible. The Archives hold the oral histories, the mythic encodings, and the symbolic keys that allow truth to survive the corrosion of time. Memory is not nostalgia — it is navigation data.',
-    icon: Archive,
-    color: 'gold',
-  },
-  {
-    title: 'The Stormwatch Tower',
-    subtitle: 'crisis literacy and nervous system resilience',
-    desc: 'The place from which we learn to read the weather — both inner and outer. Stormwatch teaches us that crisis is not aberration but pattern, and that a regulated nervous system is the first instrument of survival. We do not fear the storm; we learn its language.',
-    icon: AlertTriangle,
-    color: 'violet',
-  },
-  {
     title: 'The Mythic Compass',
-    subtitle: 'archetypes, symbolism, sacred geometry',
+    subtitle: 'archetypal orientation and symbolic pattern recognition',
     desc: 'The Compass does not point north — it points toward meaning. Through archetypes, sacred geometry, and symbolic literacy, the Mythic Compass orients us in the landscape of the soul. It is the instrument by which we navigate the invisible territories.',
     icon: Navigation,
     color: 'indigo',
   },
   {
-    title: 'The Ember Choir',
-    subtitle: 'voice, storytelling, resonance, atmosphere',
-    desc: 'Where signal becomes song. The Ember Choir is the subsystem of transmission through voice, story, and atmospheric resonance. It teaches that how we carry the signal matters as much as the signal itself. A truth told without resonance is a seed on stone.',
-    icon: Music,
+    title: 'The Signal Archives',
+    subtitle: 'mythic memory, dreams, conversations, poems, and symbolic transmission',
+    desc: 'Where the signals of ages past are preserved, catalogued, and made accessible. The Archives hold the oral histories, the mythic encodings, and the symbolic keys that allow truth to survive the corrosion of time. Memory is not nostalgia — it is navigation data.',
+    icon: Archive,
     color: 'gold',
   },
   {
     title: 'The Night Garden',
-    subtitle: 'shadow work and emotional composting',
+    subtitle: 'shadow work, emotional composting, humility, grief literacy, and sacred descent',
     desc: 'The garden that grows in darkness. The Night Garden is where the unresolved, the suppressed, and the unspoken are brought not for judgment but for composting. Shadow is not enemy — it is fertile ground. What we refuse to see will grow wild; what we tend in darkness becomes medicine.',
     icon: Moon,
-    color: 'violet',
+    color: 'indigo',
+  },
+  {
+    title: 'The Phoenix Principle',
+    subtitle: 'transformation, fire, sacrifice, regeneration, and embodied change',
+    desc: 'Destruction is not the opposite of creation — it is its prerequisite. The Phoenix does not rise despite the fire; it rises because of it. Burn what is false. Protect what is true. Rise in alignment. The Phoenix Principle is the subsystem of sacred destruction and conscious rebirth.',
+    icon: CloudLightning,
+    color: 'gold',
+  },
+  {
+    title: 'The Ember Choir',
+    subtitle: 'voice, storytelling, poetry, music, teaching, and resonant transmission',
+    desc: 'Where signal becomes song. The Ember Choir is the subsystem of transmission through voice, story, and atmospheric resonance. It teaches that how we carry the signal matters as much as the signal itself. A truth told without resonance is a seed on stone.',
+    icon: Music,
+    color: 'indigo',
   },
   {
     title: 'The Featherpath',
-    subtitle: 'pilgrimage, wandering, living myth',
+    subtitle: 'pilgrimage, wandering, landscape myth, and living initiation',
     desc: 'The path that is found by walking it. The Featherpath is the subsystem of embodied journey — pilgrimage, wandering, and the practice of living myth. It teaches that some coordinates can only be discovered in motion, and that the myth is not the story we tell but the road we walk.',
     icon: Footprints,
+    color: 'gold',
+  },
+  {
+    title: 'The Rhythmic Weave',
+    subtitle: 'creativity, synchronicity, MoiraMUSEment, sacred play, and harmonic living',
+    desc: 'The connective tissue that binds all subsystems into a living whole. The Rhythmic Weave is the recognition that all systems — ecological, social, cosmic — are rhythmic, and that creativity, play, and synchronicity are the instruments by which we attune to the deeper pattern.',
+    icon: Scan,
     color: 'indigo',
   },
 ];
@@ -343,8 +342,8 @@ export default function Ravenstar() {
       {/* Ravenstar Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/07-keys-to-the-kingdom-keys.png',
-          '/Gallery/08-keys-to-the-kingdom-master-map.png',
+          '/Gallery/07-keys-to-the-kingdom-keys.webp',
+          '/Gallery/08-keys-to-the-kingdom-master-map.webp',
         ]}
         limit={2}
         title="Keys to The Kingdom"

@@ -30,6 +30,7 @@ function App() {
   return (
     <Layout>
       <ScrollToTop />
+      <AmbientAudioPlayer />
       <AnimatePresence mode="wait">
         <Suspense fallback={<LoadingScreen />}>
           <Routes location={location} key={location.pathname}>
@@ -50,7 +51,6 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/seed-membership" element={<SeedMembership />} />
             <Route path="/mycelium-membership" element={<MyceliumMembership />} />
-            {/* Legacy/alternate paths kept alive so old published links do not break */}
             <Route path="/media-gallery" element={<Navigate to="/gallery" replace />} />
             <Route path="/explore" element={<Navigate to="/gallery" replace />} />
             <Route path="/join-the-resonance" element={<Navigate to="/join" replace />} />
@@ -67,5 +67,5 @@ function App() {
     </Layout>
   );
 }
-<AmbientAudioPlayer />
+
 export default App;

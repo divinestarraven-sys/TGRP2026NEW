@@ -295,9 +295,9 @@ export default function Resources() {
       {/* Resources Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/10-green-resonance-workbook-cover.png',
-          '/Gallery/07-keys-to-the-kingdom-keys.png',
-          '/Gallery/08-keys-to-the-kingdom-master-map.png',
+          '/Gallery/10-green-resonance-workbook-cover.webp',
+          '/Gallery/07-keys-to-the-kingdom-keys.webp',
+          '/Gallery/08-keys-to-the-kingdom-master-map.webp',
         ]}
         limit={3}
         title="Practice Materials"

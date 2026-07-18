@@ -313,9 +313,9 @@ export default function ResonanceGarden() {
       {/* Garden Gallery */}
       <GalleryShowcase
         srcs={[
-          '/Gallery/01-best-new-garden-map.png',
-          '/Gallery/02-new-green-resonance-garden-map-delta.png',
-          '/Gallery/03-really-good-for-poster.png',
+          '/Gallery/01-best-new-garden-map.webp',
+          '/Gallery/02-new-green-resonance-garden-map-delta.webp',
+          '/Gallery/03-really-good-for-poster.webp',
         ]}
         limit={3}
         title="Resonance Garden Maps"
