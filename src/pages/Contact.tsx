@@ -1,24 +1,44 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Mail, MapPin, Send, Check, MessageCircle } from 'lucide-react';
+import { Mail, MapPin, Send, Check, MessageCircle, Loader2 } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import SacredGeometry from '../components/SacredGeometry';
 import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
+import { supabase } from '../lib/supabase';
 
 const contactMethods = [
   { icon: Mail, title: 'Email', value: 'resonance@greenresonance.org', desc: 'For inquiries, collaborations, and deep conversations.' },
   { icon: MapPin, title: 'Bioregion', value: 'Global Network', desc: 'Rooted in the Nordic wilderness, connected worldwide.' },
-  { icon: MessageCircle, title: 'Oracle', value: 'AI Chat', desc: 'Use the Oracle chatbot in the bottom-right corner for immediate guidance.' },
+  { icon: MessageCircle, title: 'Oracle', value: 'AI Chat', desc: 'Use the Oracle chatbot near the bottom-right corner for immediate guidance.' },
 ];
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', type: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setFormState('submitting');
+    setErrorMsg('');
+
+    const { error } = await supabase.from('contact_messages').insert({
+      name: form.name,
+      email: form.email.toLowerCase().trim(),
+      subject: form.subject,
+      inquiry_type: form.type,
+      message: form.message,
+      newsletter_consent: newsletterConsent,
+    });
+
+    if (error) {
+      setFormState('error');
+      setErrorMsg('Something went wrong. Please try again.');
+    } else {
+      setFormState('success');
+    }
   };
 
   return (
@@ -79,7 +99,7 @@ export default function Contact() {
               subtitle="Every message is a thread in the weave."
             />
 
-            {!submitted ? (
+            {formState !== 'success' ? (
               <GlassCard className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -144,12 +164,36 @@ export default function Contact() {
                       placeholder="Speak your truth..."
                     />
                   </div>
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={newsletterConsent}
+                      onChange={(e) => setNewsletterConsent(e.target.checked)}
+                      className="mt-0.5 w-4 h-4 rounded border-emerald-glow/20 bg-cosmic-deep/50 text-emerald-glow focus:ring-emerald-glow/30"
+                    />
+                    <span className="font-body text-moonlight-white/40 text-xs leading-relaxed">
+                      Send me Green Resonance Project news and updates.
+                    </span>
+                  </label>
+                  {formState === 'error' && (
+                    <p className="text-red-400/80 text-xs font-body">{errorMsg}</p>
+                  )}
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-xl bg-emerald-glow/20 border border-emerald-glow/30 hover:bg-emerald-glow/30 transition-all font-display text-sm tracking-widest text-emerald-glow flex items-center justify-center gap-2"
+                    disabled={formState === 'submitting'}
+                    className="w-full py-3 rounded-xl bg-emerald-glow/20 border border-emerald-glow/30 hover:bg-emerald-glow/30 transition-all font-display text-sm tracking-widest text-emerald-glow flex items-center justify-center gap-2 disabled:opacity-50"
                   >
-                    Send Signal
-                    <Send className="w-4 h-4" />
+                    {formState === 'submitting' ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Signal
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
                   </button>
                 </form>
               </GlassCard>

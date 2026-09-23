@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { ArrowRight, Check, TreePine, Users, Zap, Sprout, Network } from 'lucide-react';
+import { ArrowRight, Check, TreePine, Users, Zap, Sprout, Network, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import SacredGeometry from '../components/SacredGeometry';
 import CymaticWaves from '../components/CymaticWaves';
 import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
+import { supabase } from '../lib/supabase';
 
 const tiers = [
   {
@@ -37,14 +38,38 @@ const tiers = [
 ];
 
 export default function JoinResonance() {
-  const [submitted, setSubmitted] = useState(false);
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
+  const [communityConsent, setCommunityConsent] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [interest, setInterest] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setFormState('submitting');
+    setErrorMsg('');
+
+    const { error } = await supabase.from('email_subscribers').insert({
+      email: email.toLowerCase().trim(),
+      first_name: name,
+      source: 'join_page',
+      newsletter_consent: newsletterConsent,
+      community_events_consent: communityConsent,
+      consent_timestamp: (newsletterConsent || communityConsent) ? new Date().toISOString() : null,
+    });
+
+    if (error) {
+      if (error.code === '23505') {
+        setFormState('success');
+      } else {
+        setFormState('error');
+        setErrorMsg('Something went wrong. Please try again.');
+      }
+    } else {
+      setFormState('success');
+    }
   };
 
   return (
@@ -198,7 +223,7 @@ export default function JoinResonance() {
             subtitle="Begin with your name and email. The resonance will find you."
           />
 
-          {!submitted ? (
+          {formState !== 'success' ? (
             <GlassCard gold className="p-8">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -239,12 +264,47 @@ export default function JoinResonance() {
                     <option value="media" className="bg-cosmic-deep">Media</option>
                   </select>
                 </div>
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={newsletterConsent}
+                    onChange={(e) => setNewsletterConsent(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded border-emerald-glow/20 bg-cosmic-deep/50 text-emerald-glow focus:ring-emerald-glow/30"
+                  />
+                  <span className="font-body text-moonlight-white/40 text-xs leading-relaxed">
+                    Send me Green Resonance Project news and updates.
+                  </span>
+                </label>
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={communityConsent}
+                    onChange={(e) => setCommunityConsent(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded border-emerald-glow/20 bg-cosmic-deep/50 text-emerald-glow focus:ring-emerald-glow/30"
+                  />
+                  <span className="font-body text-moonlight-white/40 text-xs leading-relaxed">
+                    Tell me about community events, workshops and gatherings.
+                  </span>
+                </label>
+                {formState === 'error' && (
+                  <p className="text-red-400/80 text-xs font-body">{errorMsg}</p>
+                )}
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl bg-emerald-glow/20 border border-emerald-glow/30 hover:bg-emerald-glow/30 transition-all font-display text-sm tracking-widest text-emerald-glow flex items-center justify-center gap-2"
+                  disabled={formState === 'submitting'}
+                  className="w-full py-3 rounded-xl bg-emerald-glow/20 border border-emerald-glow/30 hover:bg-emerald-glow/30 transition-all font-display text-sm tracking-widest text-emerald-glow flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  Enter The Resonance
-                  <ArrowRight className="w-4 h-4" />
+                  {formState === 'submitting' ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Entering...
+                    </>
+                  ) : (
+                    <>
+                      Enter The Resonance
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </form>
             </GlassCard>

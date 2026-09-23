@@ -76,6 +76,7 @@ export default function SeedMembership() {
   const [email, setEmail] = useState('');
   const [interests, setInterests] = useState<string[]>([]);
   const [message, setMessage] = useState('');
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
 
   const toggleInterest = (interest: string) => {
     setInterests((prev) =>
@@ -89,7 +90,7 @@ export default function SeedMembership() {
 
     const { error } = await supabase
       .from('seed_membership_waitlist')
-      .insert({ name, email, interests, message });
+      .insert({ name, email: email.toLowerCase().trim(), interests, message, newsletter_consent: newsletterConsent });
 
     if (error) {
       if (error.code === '23505') {
@@ -420,6 +421,17 @@ export default function SeedMembership() {
                     placeholder="Tell us what interests you most..."
                   />
                 </div>
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={newsletterConsent}
+                    onChange={(e) => setNewsletterConsent(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded border-emerald-glow/20 bg-cosmic-deep/50 text-emerald-glow focus:ring-emerald-glow/30"
+                  />
+                  <span className="font-body text-moonlight-white/40 text-xs leading-relaxed">
+                    Send me Green Resonance Project news and updates.
+                  </span>
+                </label>
 
                 {formState === 'error' && (
                   <p className="text-red-400/80 text-xs font-body">

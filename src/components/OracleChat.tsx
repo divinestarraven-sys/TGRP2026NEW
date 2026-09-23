@@ -41,7 +41,7 @@ export default function OracleChat() {
   return (
     <>
       <motion.button
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full glass-bio glow-biolum flex items-center justify-center"
+        className="fixed bottom-6 right-44 z-50 w-14 h-14 rounded-full glass-bio glow-biolum flex items-center justify-center"
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
@@ -54,7 +54,7 @@ export default function OracleChat() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-24 right-6 z-50 w-[340px] sm:w-[380px] max-h-[500px] glass-solar rounded-2xl overflow-hidden flex flex-col"
+            className="fixed bottom-24 right-44 z-50 w-[340px] sm:w-[380px] max-h-[500px] glass-solar rounded-2xl overflow-hidden flex flex-col"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
