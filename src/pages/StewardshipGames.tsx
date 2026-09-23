@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
-  Trophy, Users, Leaf, Wrench, Brain, Dumbbell, BookOpen,
+  Trophy, Users, Leaf, Brain, Dumbbell, BookOpen,
   ShieldCheck, Award, ArrowRight, Factory, TreePine, Heart,
   Cpu, Droplets, Sprout, Wind, Hammer, Scissors, CircuitBoard,
   Cog, Recycle,

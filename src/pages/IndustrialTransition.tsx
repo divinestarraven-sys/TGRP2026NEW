@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Factory, Wrench, Recycle, Users, TreePine,
-  Cpu, FlaskConical, TrendingDown, Cog, Building2, Layers,
-  ShieldCheck, ScrollText,
+  ArrowRight, Factory, Wrench, Users,
+  Cpu, FlaskConical, Building2, Layers,
+  ShieldCheck,
 } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import SacredGeometry from '../components/SacredGeometry';
