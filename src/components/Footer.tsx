@@ -4,27 +4,35 @@ import { motion } from 'framer-motion';
 
 const footerLinks = [
   {
-    title: 'Explore',
+    title: 'Framework',
     links: [
       { path: '/framework', label: 'The Framework' },
       { path: '/pillars', label: 'The 6 Pillars' },
       { path: '/portals', label: 'The 7 Portals' },
       { path: '/ravenstar', label: 'Ravenstar' },
-      { path: '/phoenix', label: 'Phoenix Principle' },
+      { path: '/phoenix', label: 'The Phoenix Principle' },
     ],
   },
   {
-    title: 'Experience',
+    title: 'Living Project',
     links: [
       { path: '/rhythmic-weave', label: 'Rhythmic Weave' },
       { path: '/garden', label: 'Resonance Garden' },
       { path: '/museschool', label: 'MUSEschool' },
       { path: '/community', label: 'Community' },
-      { path: '/gallery', label: 'Media Gallery' },
+      { path: '/gallery', label: 'Gallery' },
     ],
   },
   {
-    title: 'Learn',
+    title: 'Future Systems',
+    links: [
+      { path: '/stewardship-games', label: 'Stewardship Games' },
+      { path: '/industrial-transition', label: 'Industrial Transition' },
+      { path: '/biohabitation', label: 'Biohabitation' },
+    ],
+  },
+  {
+    title: 'Membership & Resources',
     links: [
       { path: '/resources', label: 'Resources' },
       { path: '/codex', label: 'The Codex' },

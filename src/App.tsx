@@ -23,6 +23,9 @@ const JoinResonance = lazy(() => import('./pages/JoinResonance'));
 const Contact = lazy(() => import('./pages/Contact'));
 const SeedMembership = lazy(() => import('./pages/SeedMembership'));
 const MyceliumMembership = lazy(() => import('./pages/MyceliumMembership'));
+const StewardshipGames = lazy(() => import('./pages/StewardshipGames'));
+const IndustrialTransition = lazy(() => import('./pages/IndustrialTransition'));
+const Biohabitation = lazy(() => import('./pages/Biohabitation'));
 
 function App() {
   const location = useLocation();
@@ -50,6 +53,9 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/seed-membership" element={<SeedMembership />} />
             <Route path="/mycelium-membership" element={<MyceliumMembership />} />
+            <Route path="/stewardship-games" element={<StewardshipGames />} />
+            <Route path="/industrial-transition" element={<IndustrialTransition />} />
+            <Route path="/biohabitation" element={<Biohabitation />} />
             {/* Legacy/alternate paths kept alive so old published links do not break */}
             <Route path="/media-gallery" element={<Navigate to="/gallery" replace />} />
             <Route path="/explore" element={<Navigate to="/gallery" replace />} />
@@ -60,6 +66,8 @@ function App() {
             <Route path="/resonance-garden" element={<Navigate to="/garden" replace />} />
             <Route path="/muse-school" element={<Navigate to="/museschool" replace />} />
             <Route path="/the-rhythmic-weave" element={<Navigate to="/rhythmic-weave" replace />} />
+            <Route path="/stewardship" element={<Navigate to="/stewardship-games" replace />} />
+            <Route path="/industrial" element={<Navigate to="/industrial-transition" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>

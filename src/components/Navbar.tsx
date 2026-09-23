@@ -3,25 +3,47 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Leaf } from 'lucide-react';
 
-const navLinks = [
-  { path: '/', label: 'Home' },
-  { path: '/framework', label: 'Framework' },
-  { path: '/pillars', label: '6 Pillars' },
-  { path: '/portals', label: '7 Portals' },
-  { path: '/ravenstar', label: 'Ravenstar' },
-  { path: '/phoenix', label: 'The Phoenix Principle' },
-  { path: '/rhythmic-weave', label: 'Weave' },
-  { path: '/garden', label: 'Garden' },
-  { path: '/museschool', label: 'MUSEschool' },
-  { path: '/community', label: 'Community' },
-  { path: '/resources', label: 'Resources' },
-  { path: '/codex', label: 'Codex' },
-  { path: '/seed-membership', label: 'Seed Membership' },
-  { path: '/mycelium-membership', label: 'Mycelium' },
-  { path: '/gallery', label: 'Gallery' },
-  { path: '/join', label: 'Join' },
-  { path: '/contact', label: 'Contact' },
+interface NavLink {
+  path: string;
+  label: string;
+  group: string;
+}
+
+const navLinks: NavLink[] = [
+  { path: '/', label: 'Home', group: 'Start' },
+  { path: '/framework', label: 'Framework', group: 'Framework' },
+  { path: '/pillars', label: '6 Pillars', group: 'Framework' },
+  { path: '/portals', label: '7 Portals', group: 'Framework' },
+  { path: '/ravenstar', label: 'Ravenstar', group: 'Mythic' },
+  { path: '/phoenix', label: 'Phoenix Principle', group: 'Mythic' },
+  { path: '/rhythmic-weave', label: 'Rhythmic Weave', group: 'Mythic' },
+  { path: '/garden', label: 'Garden', group: 'Living' },
+  { path: '/museschool', label: 'MUSEschool', group: 'Living' },
+  { path: '/community', label: 'Community', group: 'Living' },
+  { path: '/stewardship-games', label: 'Stewardship Games', group: 'Future' },
+  { path: '/industrial-transition', label: 'Industrial Transition', group: 'Future' },
+  { path: '/biohabitation', label: 'Biohabitation', group: 'Future' },
+  { path: '/codex', label: 'Codex', group: 'Knowledge' },
+  { path: '/resources', label: 'Resources', group: 'Knowledge' },
+  { path: '/gallery', label: 'Gallery', group: 'Knowledge' },
+  { path: '/seed-membership', label: 'Seed', group: 'Membership' },
+  { path: '/mycelium-membership', label: 'Mycelium', group: 'Membership' },
+  { path: '/join', label: 'Join', group: 'Membership' },
+  { path: '/contact', label: 'Contact', group: 'About' },
 ];
+
+const groupOrder = ['Start', 'Framework', 'Mythic', 'Living', 'Future', 'Knowledge', 'Membership', 'About'];
+
+const groupColors: Record<string, string> = {
+  Start: 'rgba(16,185,129,0.7)',
+  Framework: 'rgba(16,185,129,0.5)',
+  Mythic: 'rgba(171,71,188,0.5)',
+  Living: 'rgba(67,160,71,0.5)',
+  Future: 'rgba(212,168,67,0.5)',
+  Knowledge: 'rgba(30,136,229,0.5)',
+  Membership: 'rgba(212,168,67,0.4)',
+  About: 'rgba(240,244,241,0.3)',
+};
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +61,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Auto-minimize on desktop after 2.5s
   useEffect(() => {
     if (!isDesktop()) return;
     timerRef.current = setTimeout(() => {
@@ -49,7 +70,6 @@ export default function Navbar() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // If mobile menu opens, never minimized
   useEffect(() => {
     if (isOpen) setMinimized(false);
   }, [isOpen]);
@@ -74,6 +94,8 @@ export default function Navbar() {
   };
 
   const showFull = !minimized || nearTop || isOpen;
+
+  const colCount = 10;
 
   return (
     <div
@@ -118,9 +140,8 @@ export default function Navbar() {
         />
 
         <div className="relative container-sacred">
-          <div className="flex items-center justify-between h-16 sm:h-20 xl:h-[5.5rem]">
-
-            {/* Brand / Logo */}
+          {/* Brand bar */}
+          <div className="flex items-center justify-between h-14 sm:h-16 xl:h-16">
             <Link to="/" className="flex items-center gap-3 group shrink-0 min-w-0">
               <motion.div
                 className="relative flex-shrink-0 flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full"
@@ -133,7 +154,6 @@ export default function Navbar() {
                 }}
               >
                 <Leaf className="w-5 h-5 text-emerald-glow" />
-                {/* Subtle second leaf for depth */}
                 <Leaf
                   className="absolute w-3 h-3 opacity-30"
                   style={{ top: 4, right: 3, color: '#d4a843', transform: 'rotate(45deg)' }}
@@ -153,40 +173,15 @@ export default function Navbar() {
                 >
                   The Green Resonance Project
                 </span>
-                <span className="hidden xl:block font-sacred text-[9px] tracking-[0.4em] mt-0.5"
-                  style={{ color: 'rgba(212,168,67,0.45)' }}>
-                  6 Pillars&nbsp;&bull;&nbsp;7 Portals&nbsp;&bull;&nbsp;One Living Whole
-                </span>
               </div>
             </Link>
 
-            {/* Desktop links */}
-            <div className="hidden xl:flex items-center gap-0.5 ml-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`relative px-2 py-2 text-xs font-body tracking-wide transition-all duration-300 whitespace-nowrap ${
-                    location.pathname === link.path
-                      ? 'text-emerald-glow'
-                      : 'text-moonlight-white/45 hover:text-moonlight-white/90'
-                  }`}
-                >
-                  {link.label}
-                  {location.pathname === link.path && (
-                    <motion.div
-                      layoutId="nav-indicator"
-                      className="absolute bottom-0 left-1 right-1 h-0.5 rounded-full"
-                      style={{
-                        background: 'linear-gradient(90deg, #10b981, #d4a843, #10b981)',
-                        boxShadow: '0 0 6px rgba(16,185,129,0.5)',
-                      }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              ))}
-            </div>
+            {/* Desktop mini-links when minimized */}
+            {minimized && !nearTop && !isOpen && (
+              <div className="hidden xl:flex items-center gap-3 text-xs font-body text-moonlight-white/30">
+                <span>Hover or scroll to top for full navigation</span>
+              </div>
+            )}
 
             {/* Mobile hamburger */}
             <button
@@ -207,6 +202,66 @@ export default function Navbar() {
               </AnimatePresence>
             </button>
           </div>
+
+          {/* Desktop two-row mega-menu grid */}
+          {showFull && (
+            <div className="hidden xl:block pb-3">
+              <div
+                className="mx-auto"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))`,
+                  gridTemplateRows: 'repeat(2, auto)',
+                  gap: '0.35rem 0.5rem',
+                  width: 'min(96vw, 1500px)',
+                  maxWidth: 'calc(100vw - 24px)',
+                }}
+              >
+                {navLinks.map((link) => {
+                  const isActive = location.pathname === link.path;
+                  return (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className="relative text-center transition-all duration-300"
+                      style={{
+                        minWidth: 0,
+                        whiteSpace: 'normal',
+                        lineHeight: 1.15,
+                        fontSize: 'clamp(0.72rem, 0.85vw, 0.9rem)',
+                        padding: '0.45rem 0.35rem',
+                        overflowWrap: 'anywhere',
+                        color: isActive ? '#10b981' : 'rgba(240,244,241,0.45)',
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isActive) e.currentTarget.style.color = 'rgba(240,244,241,0.9)';
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isActive) e.currentTarget.style.color = 'rgba(240,244,241,0.45)';
+                      }}
+                    >
+                      <span
+                        className="block w-[3px] h-[3px] rounded-full mx-auto mb-1 opacity-60"
+                        style={{ backgroundColor: groupColors[link.group] || 'rgba(16,185,129,0.4)' }}
+                      />
+                      {link.label}
+                      {isActive && (
+                        <motion.div
+                          layoutId="nav-indicator"
+                          className="absolute bottom-0 left-1 right-1 h-0.5 rounded-full"
+                          style={{
+                            background: 'linear-gradient(90deg, #10b981, #d4a843, #10b981)',
+                            boxShadow: '0 0 6px rgba(16,185,129,0.5)',
+                          }}
+                          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                        />
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </motion.div>
 
@@ -225,25 +280,31 @@ export default function Navbar() {
             }}
           >
             <div className="container-sacred py-4 space-y-1 max-h-[75vh] overflow-y-auto">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.path}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.025 }}
-                >
-                  <Link
-                    to={link.path}
-                    className={`block px-4 py-2.5 rounded-lg text-sm font-body tracking-wide transition-all ${
-                      location.pathname === link.path
-                        ? 'text-emerald-glow bg-emerald-glow/8'
-                        : 'text-moonlight-white/50 hover:text-moonlight-white/90 hover:bg-emerald-glow/5'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+              {groupOrder.map((groupName) => {
+                const groupLinks = navLinks.filter((l) => l.group === groupName);
+                if (groupLinks.length === 0) return null;
+                return (
+                  <div key={groupName} className="mb-2">
+                    <p className="font-display text-[10px] tracking-[0.3em] uppercase px-4 py-1"
+                      style={{ color: groupColors[groupName] || 'rgba(212,168,67,0.4)' }}>
+                      {groupName}
+                    </p>
+                    {groupLinks.map((link) => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        className={`block px-4 py-2.5 rounded-lg text-sm font-body tracking-wide transition-all ${
+                          location.pathname === link.path
+                            ? 'text-emerald-glow bg-emerald-glow/8'
+                            : 'text-moonlight-white/50 hover:text-moonlight-white/90 hover:bg-emerald-glow/5'
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
         )}

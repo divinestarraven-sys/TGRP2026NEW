@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   ArrowRight, Eye, Heart, Cpu, Globe, Zap, Waves, Leaf, Sprout,
   Star, TreePine, BookOpen, Compass, Flame, GraduationCap,
-  Map, Sparkles, Network,
+  Map, Sparkles, Network, Trophy, Factory, Globe2,
 } from 'lucide-react';
 import SacredGeometry from '../components/SacredGeometry';
 import SacredGeometryHero from '../components/SacredGeometryHero';
@@ -37,6 +37,12 @@ const featuredSystems = [
   { icon: GraduationCap, title: 'MUSEschool', desc: 'A regenerative learning ecosystem integrating ecology, creativity, and contemplative practice.', path: '/museschool' },
   { icon: Waves, title: 'The Rhythmic Weave', desc: 'Resonance, reciprocity, rhythm, reflection, reverence, and remembrance.', path: '/rhythmic-weave' },
   { icon: BookOpen, title: 'Resources & Workbooks', desc: 'Guides, practice cards, garden blueprints, and the living archive.', path: '/resources' },
+];
+
+const futureSystems = [
+  { icon: Trophy, title: 'Stewardship Games', desc: 'Communities earn the responsibility to steward shared regional infrastructure through demonstrated care.', path: '/stewardship-games' },
+  { icon: Factory, title: 'Industrial Transition', desc: 'A phased roadmap from throughput to stewardship — from extraction to regeneration.', path: '/industrial-transition' },
+  { icon: Globe2, title: 'Biohabitation Roadmap', desc: 'A civilizational pathway toward dynamic regenerative equilibrium, 2026 to 2100+.', path: '/biohabitation' },
 ];
 
 const introColumns = [
@@ -395,6 +401,37 @@ export default function Home() {
                   </div>
                 </Link>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* From Garden to Bioregion */}
+      <section className="section-padding relative bg-gradient-to-b from-cosmic-black via-solarpunk-canopy/8 to-cosmic-black">
+        <div className="container-sacred relative z-10">
+          <SectionHeading
+            title="From Garden to Bioregion"
+            subtitle="The Green Resonance Project begins with the individual and the Garden, but its long horizon asks a larger question: how might communities organize food, water, knowledge, technology and industry so that human life becomes increasingly compatible with the living systems that sustain it?"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-10">
+            {futureSystems.map((sys, i) => (
+              <Link key={sys.title} to={sys.path}>
+                <GlassCard gold delay={i * 0.1} className="p-6 sm:p-8 h-full group cursor-pointer">
+                  <div className="w-12 h-12 rounded-xl bg-gold-sacred/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <sys.icon className="w-6 h-6 text-gold-sacred" />
+                  </div>
+                  <h3 className="font-display text-lg tracking-wider text-moonlight-white mb-2 group-hover:text-gold-sacred transition-colors">
+                    {sys.title}
+                  </h3>
+                  <p className="font-body text-moonlight-white/40 text-sm leading-relaxed mb-4">
+                    {sys.desc}
+                  </p>
+                  <span className="inline-flex items-center gap-2 font-display text-xs tracking-widest text-gold-sacred/60 group-hover:text-gold-sacred transition-colors">
+                    Explore
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </GlassCard>
+              </Link>
             ))}
           </div>
         </div>
