@@ -1,0 +1,1 @@
+Apply these files to divinestarraven-sys/TGRP2026NEW at or after commit f3b460b (2026-09-23). The src files replace their matching repository paths; PDF files go under public/downloads/. Run npm run typecheck, npm run lint, npm run build. Set the production VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY, then perform a real Seed signup test before announcing early access.

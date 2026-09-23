@@ -29,7 +29,7 @@ export default function HarmonicPlayer() {
 
   const stopSound = () => {
     if (oscillatorRef.current) {
-      try { oscillatorRef.current.stop(); } catch {}
+      try { oscillatorRef.current.stop(); } catch { /* It may already have stopped. */ }
       oscillatorRef.current = null;
     }
     setIsPlaying(false);

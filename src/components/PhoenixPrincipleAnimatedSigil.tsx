@@ -133,7 +133,8 @@ function PhoenixPrincipleAnimatedSigil({ className = '' }: Props) {
         const a = (i / points) * Math.PI * 2 + rotation;
         const x = cx + Math.cos(a) * r;
         const y = cy + Math.sin(a) * r;
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
       }
       ctx.strokeStyle = `hsla(${hue}, 76%, 56%, ${alpha})`;
       ctx.lineWidth = 0.8;

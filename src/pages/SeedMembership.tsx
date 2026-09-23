@@ -371,9 +371,11 @@ export default function SeedMembership() {
             <GlassCard gold className="p-8">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">NAME</label>
+                  <label htmlFor="seed-name" className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">NAME</label>
                   <input
+                    id="seed-name"
                     type="text"
+                    autoComplete="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -382,9 +384,11 @@ export default function SeedMembership() {
                   />
                 </div>
                 <div>
-                  <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">EMAIL</label>
+                  <label htmlFor="seed-email" className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">EMAIL</label>
                   <input
+                    id="seed-email"
                     type="email"
+                    autoComplete="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -399,6 +403,7 @@ export default function SeedMembership() {
                       <button
                         key={opt}
                         type="button"
+                        aria-pressed={interests.includes(opt)}
                         onClick={() => toggleInterest(opt)}
                         className={`px-3 py-1.5 rounded-full text-xs font-display tracking-wider transition-all ${
                           interests.includes(opt)
@@ -412,8 +417,9 @@ export default function SeedMembership() {
                   </div>
                 </div>
                 <div>
-                  <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">MESSAGE (OPTIONAL)</label>
+                  <label htmlFor="seed-message" className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">MESSAGE (OPTIONAL)</label>
                   <textarea
+                    id="seed-message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     rows={3}
@@ -438,6 +444,10 @@ export default function SeedMembership() {
                     Something went wrong. Please try again.
                   </p>
                 )}
+
+                <p className="font-body text-sm text-moonlight-white/60 leading-relaxed">
+                  We will use your email to respond to your Seed access request. This is an interest request, not an active membership account.
+                </p>
 
                 <button
                   type="submit"
@@ -506,10 +516,10 @@ export default function SeedMembership() {
                 Browse Resources
               </h3>
               <p className="font-body text-moonlight-white/40 text-sm mb-4">
-                Writings, practices, tools, and media for the regenerative path.
+                Read the two current project PDFs online or download them for offline reading.
               </p>
               <Link
-                to="/resources"
+                to="/resources#project-downloads"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-glow/15 border border-emerald-glow/25 hover:bg-emerald-glow/25 transition-all font-display text-xs tracking-widest text-emerald-glow"
               >
                 View Resources

@@ -61,6 +61,19 @@ const categories = [
   },
 ];
 
+const projectDownloads = [
+  {
+    title: 'The Living Framework & Workbook',
+    description: '223 pages \u00b7 complete workbook, current practice updates, artwork, and a large-print reading section.',
+    href: '/downloads/green-resonance-living-framework-2026.pdf',
+  },
+  {
+    title: 'Community & Long-Horizon Roadmaps',
+    description: '77 pages \u00b7 current stewardship, industry, and biohabitation roadmaps with labelled historical detail and large print.',
+    href: '/downloads/green-resonance-roadmaps-2026.pdf',
+  },
+];
+
 const externalLinks = [
   { title: 'Sacred Geometry International', desc: 'The mathematics of creation' },
   { title: 'The Mycelium Project', desc: 'Underground network science' },
@@ -111,6 +124,35 @@ export default function Resources() {
           >
             Texts, media, tools, and guides for the regenerative path. A curated collection of resources aligned with The Green Resonance Framework.
           </motion.p>
+        </div>
+      </section>
+
+      {/* Current project publications */}
+      <section id="project-downloads" className="section-padding scroll-mt-20">
+        <div className="container-sacred">
+          <SectionHeading
+            title="Current Project PDFs"
+            subtitle="September 2026 editions. Open online or save a copy for offline reading."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {projectDownloads.map((resource) => (
+              <GlassCard key={resource.href} gold className="p-6 sm:p-8">
+                <FileText className="w-7 h-7 text-gold-sacred mb-4" aria-hidden="true" />
+                <h3 className="font-display text-xl text-moonlight-white mb-3">{resource.title}</h3>
+                <p className="font-body text-moonlight-white/70 text-base leading-relaxed mb-5">
+                  {resource.description}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <a href={resource.href} target="_blank" rel="noopener noreferrer" className="px-4 py-2.5 rounded-full bg-emerald-glow/15 border border-emerald-glow/30 text-sm font-display text-emerald-glow hover:bg-emerald-glow/25">
+                    Open PDF
+                  </a>
+                  <a href={resource.href} download className="px-4 py-2.5 rounded-full border border-gold-sacred/30 text-sm font-display text-gold-sacred hover:bg-gold-sacred/15">
+                    Download PDF
+                  </a>
+                </div>
+              </GlassCard>
+            ))}
+          </div>
         </div>
       </section>
 
