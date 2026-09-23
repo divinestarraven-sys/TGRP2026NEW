@@ -57,7 +57,8 @@ export default function JoinResonance() {
       source: 'join_page',
       newsletter_consent: newsletterConsent,
       community_events_consent: communityConsent,
-      consent_timestamp: (newsletterConsent || communityConsent) ? new Date().toISOString() : null,
+      // consent_timestamp is set by the database, not the browser, so the
+      // consent record cannot be backdated by a crafted request.
     });
 
     if (error) {
