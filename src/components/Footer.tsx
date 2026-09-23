@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { TreePine, ArrowUp, Leaf } from 'lucide-react';
+import { TreePine, ArrowUp, Leaf, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const footerLinks = [
@@ -76,6 +76,14 @@ export default function Footer() {
               <Leaf className="w-4 h-4" />
               <span className="text-xs font-body">Rooted in Nature. Guided by Truth. Aligned by Integrity.</span>
             </div>
+            <a
+              href="mailto:DivineStarRaven@gmail.com"
+              aria-label="Send email to DivineStarRaven@gmail.com"
+              className="mt-4 inline-flex items-center gap-2 text-moonlight-white/35 hover:text-solarpunk-biolum text-sm font-body transition-colors"
+            >
+              <Mail className="w-4 h-4" />
+              DivineStarRaven@gmail.com
+            </a>
           </div>
 
           {footerLinks.map((section) => (

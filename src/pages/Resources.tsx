@@ -20,7 +20,7 @@ const categories = [
     color: 'emerald-glow',
     items: [
       { title: 'The Original Pattern: Sacred Geometry in Nature', type: 'Essay' },
-      { title: 'Mycelium and the Intelligence of Networks', type: 'Research', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC6976561/' },
+      { title: 'Mycelium and Microbial Networks', type: 'Research', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5467244/' },
       { title: 'The Six Pillars: A Complete Guide', type: 'Guide' },
       { title: 'Nordic Mysticism and the Green Resonance', type: 'Essay' },
       { title: 'Solarpunk: Architecture of the Possible', type: 'Manifesto' },

@@ -7,10 +7,12 @@ import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
 import { supabase } from '../lib/supabase';
 
+const CONTACT_EMAIL = 'DivineStarRaven@gmail.com';
+
 const contactMethods = [
-  { icon: Mail, title: 'Email', value: 'resonance@greenresonance.org', desc: 'For inquiries, collaborations, and deep conversations.' },
-  { icon: MapPin, title: 'Bioregion', value: 'Global Network', desc: 'Rooted in the Nordic wilderness, connected worldwide.' },
-  { icon: MessageCircle, title: 'Oracle', value: 'AI Chat', desc: 'Use the Oracle chatbot near the bottom-right corner for immediate guidance.' },
+  { icon: Mail, title: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, desc: 'For inquiries, collaborations, and deep conversations.' },
+  { icon: MapPin, title: 'Bioregion', value: 'Global Network', href: null, desc: 'Rooted in the Nordic wilderness, connected worldwide.' },
+  { icon: MessageCircle, title: 'Oracle', value: 'AI Chat', href: null, desc: 'Use the Oracle chatbot near the bottom-right corner for immediate guidance.' },
 ];
 
 export default function Contact() {
@@ -86,7 +88,17 @@ export default function Contact() {
                   <method.icon className="w-6 h-6 text-emerald-glow" />
                 </div>
                 <h3 className="font-display text-lg tracking-wider text-moonlight-white mb-1">{method.title}</h3>
-                <p className="font-display text-sm text-emerald-glow mb-2">{method.value}</p>
+                {method.href ? (
+                  <a
+                    href={method.href}
+                    aria-label={`Send email to ${method.value}`}
+                    className="font-display text-sm text-emerald-glow hover:text-solarpunk-biolum transition-colors underline underline-offset-2 mb-2 inline-block"
+                  >
+                    {method.value}
+                  </a>
+                ) : (
+                  <p className="font-display text-sm text-emerald-glow mb-2">{method.value}</p>
+                )}
                 <p className="font-body text-moonlight-white/40 text-sm">{method.desc}</p>
               </GlassCard>
             ))}
