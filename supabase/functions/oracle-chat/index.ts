@@ -229,12 +229,48 @@ function reflectOn(question: string): string {
 const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
 const RATE_LIMIT_MAX = 20;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+const RATE_LIMIT_MAX_KEYS = 10_000;
 
-function isRateLimited(ip: string): boolean {
+// Input bounds. The endpoint is public (verify_jwt = false), so an unbounded
+// prompt would be unmetered spend on the upstream model.
+const MAX_MESSAGE_CHARS = 4000;
+const MAX_HISTORY_ENTRIES = 10;
+const MAX_HISTORY_ENTRY_CHARS = 4000;
+
+// Resolve the caller address WITHOUT trusting the client. The left-most entry of
+// `x-forwarded-for` is supplied by the original caller and is therefore
+// attacker-chosen; trusted infrastructure appends on the right. Prefer the
+// platform's own `x-real-ip`, and otherwise take the RIGHT-most forwarded entry.
+function clientKey(req: Request): string {
+  const realIp = req.headers.get("x-real-ip")?.trim();
+  if (realIp) return realIp;
+
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const hops = forwarded
+      .split(",")
+      .map((h) => h.trim())
+      .filter((h) => h.length > 0);
+    if (hops.length > 0) return hops[hops.length - 1];
+  }
+
+  return "unknown";
+}
+
+function isRateLimited(key: string): boolean {
   const now = Date.now();
-  const entry = rateLimitMap.get(ip);
+
+  // Evict expired buckets so a caller cycling keys cannot grow the map without
+  // bound. Guarded by a size check to keep the common path cheap.
+  if (rateLimitMap.size > RATE_LIMIT_MAX_KEYS) {
+    for (const [k, v] of rateLimitMap) {
+      if (now - v.windowStart > RATE_LIMIT_WINDOW_MS) rateLimitMap.delete(k);
+    }
+  }
+
+  const entry = rateLimitMap.get(key);
   if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
-    rateLimitMap.set(ip, { count: 1, windowStart: now });
+    rateLimitMap.set(key, { count: 1, windowStart: now });
     return false;
   }
   entry.count += 1;
@@ -366,34 +402,55 @@ Deno.serve(async (req: Request) => {
         400
       );
     }
+    if (message.length > MAX_MESSAGE_CHARS) {
+      return jsonResponse(
+        {
+          ok: false,
+          error: `Your question is too long. Please keep it under ${MAX_MESSAGE_CHARS} characters.`,
+        },
+        400
+      );
+    }
 
-    const history: HistoryEntry[] = Array.isArray(body.history)
-      ? body.history
-      : [];
+    // The history comes from the browser, so it is attacker-controlled: without
+    // validation a caller can forge `assistant` turns and talk the model out of
+    // the boundaries the system prompt sets. Keep only well-formed entries and
+    // bound both their number and their size.
+    const history: HistoryEntry[] = (
+      Array.isArray(body.history) ? body.history : []
+    )
+      .filter(
+        (entry): entry is HistoryEntry =>
+          !!entry &&
+          typeof entry === "object" &&
+          (entry.role === "user" || entry.role === "oracle") &&
+          typeof entry.text === "string" &&
+          entry.text.trim().length > 0
+      )
+      .slice(-MAX_HISTORY_ENTRIES)
+      .map((entry) => ({
+        role: entry.role,
+        text: entry.text.slice(0, MAX_HISTORY_ENTRY_CHARS),
+      }));
+
+    // Rate limit BOTH paths. Previously this sat inside the AI branch, so the
+    // keyword fallback was an unmetered public compute endpoint.
+    if (isRateLimited(clientKey(req))) {
+      return jsonResponse(
+        {
+          ok: false,
+          error:
+            "The Oracle needs a moment to rest. Please try again in a few minutes.",
+        },
+        429
+      );
+    }
 
     // Check for OpenAI key
     const openaiKey = Deno.env.get("OPENAI_API_KEY") ?? "";
 
     if (openaiKey) {
       // --- AI path ---
-
-      // Rate limiting (best-effort, per-isolate)
-      const clientIP =
-        req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-        req.headers.get("x-real-ip") ||
-        "unknown";
-
-      if (isRateLimited(clientIP)) {
-        return jsonResponse(
-          {
-            ok: false,
-            error:
-              "The Oracle needs a moment to rest. Please try again in a few minutes.",
-          },
-          429
-        );
-      }
-
       try {
         const reply = await callOpenAI(openaiKey, message, history);
         return jsonResponse({ ok: true, reply, source: "ai" });

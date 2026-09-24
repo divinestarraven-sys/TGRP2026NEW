@@ -48,7 +48,20 @@ async function verifyResendSignature(
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
 
-  return expectedHex === v1Signature;
+  return timingSafeEqualHex(expectedHex, v1Signature);
+}
+
+// Compare two hex digests without leaking how many leading characters matched.
+// A plain `===` short-circuits on the first differing character, which lets a
+// caller recover the expected signature one character at a time by timing the
+// responses.
+function timingSafeEqualHex(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return diff === 0;
 }
 
 Deno.serve(async (req: Request) => {
