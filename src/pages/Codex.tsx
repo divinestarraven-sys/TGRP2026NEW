@@ -453,9 +453,12 @@ export default function Codex() {
                 </Link>
               ))}
             </div>
-            <div className="text-center mt-6">
+            <div className="flex flex-wrap justify-center gap-4 mt-6">
               <Link to="/symbolic-keys" className="inline-flex items-center gap-2 text-gold-sacred hover:text-gold-sacred/80 font-display text-sm tracking-wider transition-colors">
                 View Full Symbolic Keys Library &rarr;
+              </Link>
+              <Link to="/resources#project-downloads" className="inline-flex items-center gap-2 text-emerald-glow hover:text-emerald-glow/80 font-display text-sm tracking-wider transition-colors">
+                Project Publications &rarr;
               </Link>
             </div>
           </motion.div>

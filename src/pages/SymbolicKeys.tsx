@@ -133,6 +133,21 @@ export default function SymbolicKeys() {
             </div>
           )}
         </section>
+
+        {/* Cross-links */}
+        <section className="py-12 text-center">
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link to="/codex" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-glow/10 border border-emerald-glow/20 text-sm font-display text-emerald-glow hover:bg-emerald-glow/20 transition-all">
+              The Codex
+            </Link>
+            <Link to="/resources#project-downloads" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gold-sacred/10 border border-gold-sacred/20 text-sm font-display text-gold-sacred hover:bg-gold-sacred/20 transition-all">
+              Project Publications
+            </Link>
+            <Link to="/ravenstar" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-glow/10 border border-emerald-glow/20 text-sm font-display text-emerald-glow hover:bg-emerald-glow/20 transition-all">
+              Ravenstar
+            </Link>
+          </div>
+        </section>
       </div>
     </PageTransition>
   );

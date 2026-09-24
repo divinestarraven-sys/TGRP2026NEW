@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { BookOpen, Video, Podcast, FileText, ExternalLink, ArrowRight, Link as LinkIcon, Sprout, Network } from 'lucide-react';
+import { BookOpen, Video, Podcast, FileText, ExternalLink, ArrowRight, Link as LinkIcon, Sprout, Network, Download, KeyRound } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import SacredGeometry from '../components/SacredGeometry';
@@ -61,9 +61,34 @@ const categories = [
   },
 ];
 
-const projectDownloads: { title: string; description: string; href: string }[] = [
-  // Real PDFs will be added here once published. Empty (0-byte) placeholders
-  // were removed because they misrepresent the publication as available.
+interface ProjectPublication {
+  title: string;
+  subtitle: string;
+  description: string;
+  href: string;
+  edition: string;
+  status: 'available' | 'pending';
+}
+
+const projectPublications: ProjectPublication[] = [
+  {
+    title: 'Green Resonance Volume I',
+    subtitle: 'Living Framework and Workbook',
+    description:
+      'The foundational text covering the Six Pillars, Seven Portals, Central Heart, the 20 Symbolic Keys, the 3-6-9 reflective framework, and guided workbook exercises for personal and community practice.',
+    href: '/downloads/green-resonance-living-framework-2026.pdf',
+    edition: 'September 2026 edition',
+    status: 'pending',
+  },
+  {
+    title: 'Green Resonance Volume II',
+    subtitle: 'Community and Roadmaps',
+    description:
+      'Community stewardship practices, the Rhythmic Weave, garden systems, industrial transition pathways, MUSEschool frameworks, Raven Stage performance architecture, and project roadmaps for 2026 and beyond.',
+    href: '/downloads/green-resonance-roadmaps-2026.pdf',
+    edition: 'September 2026 edition',
+    status: 'pending',
+  },
 ];
 
 const externalLinks = [
@@ -119,43 +144,67 @@ export default function Resources() {
         </div>
       </section>
 
-      {/* Current project publications */}
+      {/* Project Publications */}
       <section id="project-downloads" className="section-padding scroll-mt-20">
         <div className="container-sacred">
           <SectionHeading
-            title="Current Project PDFs"
+            title="Project Publications"
             subtitle="September 2026 editions. Open online or save a copy for offline reading."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {projectDownloads.length === 0 ? (
-              <GlassCard gold className="p-6 sm:p-8 md:col-span-2 text-center">
-                <FileText className="w-7 h-7 text-gold-sacred/40 mx-auto mb-4" aria-hidden="true" />
-                <h3 className="font-display text-xl text-moonlight-white/60 mb-3">Coming Soon</h3>
-                <p className="font-body text-moonlight-white/40 text-base leading-relaxed">
-                  The project PDFs are being prepared and will be available for
-                  download here once published.
+            {projectPublications.map((pub, i) => (
+              <GlassCard key={pub.href} gold delay={i * 0.1} className="p-6 sm:p-8">
+                <FileText className="w-7 h-7 text-gold-sacred mb-4" aria-hidden="true" />
+                <h3 className="font-display text-xl text-moonlight-white mb-1">{pub.title}</h3>
+                <p className="font-display text-sm text-gold-sacred/70 tracking-wider mb-3">{pub.subtitle}</p>
+                <p className="font-body text-moonlight-white/60 text-base leading-relaxed mb-2">
+                  {pub.description}
                 </p>
-              </GlassCard>
-            ) : (
-              projectDownloads.map((resource) => (
-                <GlassCard key={resource.href} gold className="p-6 sm:p-8">
-                  <FileText className="w-7 h-7 text-gold-sacred mb-4" aria-hidden="true" />
-                  <h3 className="font-display text-xl text-moonlight-white mb-3">{resource.title}</h3>
-                  <p className="font-body text-moonlight-white/70 text-base leading-relaxed mb-5">
-                    {resource.description}
-                  </p>
+                <p className="font-body text-moonlight-white/30 text-sm mb-5">{pub.edition}</p>
+                {pub.status === 'available' ? (
                   <div className="flex flex-wrap gap-3">
-                    <a href={resource.href} target="_blank" rel="noopener noreferrer" className="px-4 py-2.5 rounded-full bg-emerald-glow/15 border border-emerald-glow/30 text-sm font-display text-emerald-glow hover:bg-emerald-glow/25">
-                      Open PDF
+                    <a
+                      href={pub.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-glow/15 border border-emerald-glow/30 text-sm font-display text-emerald-glow hover:bg-emerald-glow/25 transition-all"
+                    >
+                      <BookOpen className="w-4 h-4" /> Read PDF
                     </a>
-                    <a href={resource.href} download className="px-4 py-2.5 rounded-full border border-gold-sacred/30 text-sm font-display text-gold-sacred hover:bg-gold-sacred/15">
-                      Download PDF
+                    <a
+                      href={pub.href}
+                      download
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-gold-sacred/30 text-sm font-display text-gold-sacred hover:bg-gold-sacred/15 transition-all"
+                    >
+                      <Download className="w-4 h-4" /> Download PDF
                     </a>
                   </div>
-                </GlassCard>
-              ))
-            )}
+                ) : (
+                  <span className="inline-block px-4 py-2 rounded-full border border-moonlight-white/10 text-sm font-display text-moonlight-white/30">
+                    PDF being prepared
+                  </span>
+                )}
+              </GlassCard>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* Symbolic Keys */}
+      <section className="section-padding bg-gradient-to-b from-cosmic-black via-cosmic-deep to-cosmic-black">
+        <div className="container-sacred text-center">
+          <SectionHeading
+            title="The 20 Symbolic Keys"
+            subtitle="A searchable library of all twenty keys with practices, sources, and historical context."
+          />
+          <Link
+            to="/symbolic-keys"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold-sacred/15 border border-gold-sacred/30 hover:bg-gold-sacred/25 transition-all font-display text-sm tracking-widest text-gold-sacred"
+          >
+            <KeyRound className="w-4 h-4" />
+            Explore the Symbolic Keys Library
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
@@ -216,7 +265,7 @@ export default function Resources() {
         <div className="container-sacred">
           <SectionHeading
             title="Allied Networks"
-            subtitle="Connected organizations and movements in the regenerative web."
+            subtitle="Connected organisations and movements in the regenerative web."
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
