@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Network, Lock, Unlock, Moon, CalendarDays, Library,
   Sprout, CircleDollarSign, Sparkles, Users, BookOpen,
@@ -14,10 +14,10 @@ import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
 import {
   MYCELIUM_PRICE_USD,
-  MYCELIUM_STRIPE_PAYMENT_LINK,
   myceliumAccessKeys,
   monthlyCommunityTimetable,
 } from '../data/memberships';
+import { useAuth } from '../contexts/AuthContext';
 
 const accessKeyIcons = [
   Sprout, Sparkles, Moon, Library, CalendarDays,
@@ -30,14 +30,46 @@ export default function MyceliumMembership() {
   const [interest, setInterest] = useState('');
   const [message, setMessage] = useState('');
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'delivery_warning' | 'error'>('idle');
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const { user, entitlement } = useAuth();
+  const navigate = useNavigate();
 
-  const handleJoin = () => {
-    if (MYCELIUM_STRIPE_PAYMENT_LINK) {
-      window.open(MYCELIUM_STRIPE_PAYMENT_LINK, '_blank', 'noopener,noreferrer');
+  const isMycelium = entitlement && (entitlement.tier === 'mycelium' || entitlement.tier === 'canopy') && entitlement.status === 'active';
+
+  const handleJoin = async () => {
+    if (!user) {
+      navigate('/signup?redirect=/mycelium-membership');
       return;
     }
-    const el = document.getElementById('mycelium-paywall');
-    el?.scrollIntoView({ behavior: 'smooth' });
+    if (isMycelium) {
+      navigate('/members');
+      return;
+    }
+    setCheckoutLoading(true);
+    try {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-checkout-session`;
+      const session = await (await import('../lib/supabase')).supabase?.auth.getSession();
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.data.session?.access_token}`,
+        },
+        body: JSON.stringify({ tier: 'mycelium' }),
+      });
+      if (!res.ok) {
+        const el = document.getElementById('mycelium-paywall');
+        el?.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      const { url } = await res.json();
+      if (url) window.location.href = url;
+    } catch {
+      const el = document.getElementById('mycelium-paywall');
+      el?.scrollIntoView({ behavior: 'smooth' });
+    } finally {
+      setCheckoutLoading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -301,12 +333,10 @@ export default function MyceliumMembership() {
                   ))}
                 </ul>
 
-                {/* Stripe placeholder notice */}
-                {!MYCELIUM_STRIPE_PAYMENT_LINK && (
-                  <div className="p-4 rounded-xl bg-solarpunk-amber/8 border border-solarpunk-amber/20 text-xs font-body text-solarpunk-amber/70 leading-relaxed">
-                    Payments are not yet active. Use the waitlist form below to
-                    register your interest and we will notify you when Mycelium
-                    Membership opens.
+                {/* Checkout notice */}
+                {checkoutLoading && (
+                  <div className="p-4 rounded-xl bg-emerald-glow/10 border border-emerald-glow/20 text-xs font-body text-emerald-glow/70 leading-relaxed text-center">
+                    Preparing checkout...
                   </div>
                 )}
               </div>

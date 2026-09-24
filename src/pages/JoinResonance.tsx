@@ -28,9 +28,9 @@ const tiers = [
   },
   {
     name: 'Canopy',
-    price: 'Annual',
+    price: '$100 / month',
     desc: 'Full immersion in the living framework.',
-    features: ['All Mycelium benefits', 'Annual Gathering access', '1-on-1 mentorship', 'Design Lab participation', 'Early access to all content', 'Founding member recognition'],
+    features: ['All Mycelium benefits', 'Annual Gathering access', '1-on-1 mentorship', 'Design Lab participation', 'Early access to all content', 'Honorary Founding Member recognition'],
     icon: Zap,
     color: 'cyan-glow',
   },
@@ -150,15 +150,18 @@ export default function JoinResonance() {
                   ))}
                 </ul>
 
-                <button
-                  className={`w-full py-3 rounded-xl font-display text-sm tracking-widest transition-all ${
+                <Link
+                  to={tier.name === 'Seed' ? '/seed-membership' : tier.name === 'Mycelium' ? '/mycelium-membership' : '/canopy-membership'}
+                  className={`block w-full py-3 rounded-xl font-display text-sm tracking-widest text-center transition-all ${
                     tier.featured
                       ? 'bg-gold-sacred/20 border border-gold-sacred/30 text-gold-sacred hover:bg-gold-sacred/30'
-                      : 'bg-emerald-glow/10 border border-emerald-glow/20 text-emerald-glow hover:bg-emerald-glow/20'
+                      : tier.name === 'Canopy'
+                        ? 'bg-cyan-glow/10 border border-cyan-glow/20 text-cyan-glow hover:bg-cyan-glow/20'
+                        : 'bg-emerald-glow/10 border border-emerald-glow/20 text-emerald-glow hover:bg-emerald-glow/20'
                   }`}
                 >
                   Join as {tier.name}
-                </button>
+                </Link>
               </GlassCard>
             ))}
           </div>

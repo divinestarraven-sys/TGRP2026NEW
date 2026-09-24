@@ -17,7 +17,7 @@ const starterPrompts = [
 function detectTopic(text: string): 'love' | 'community' | 'garden' | '369' | 'equation' | 'general' {
   const lower = text.toLowerCase();
 
-  if (/\b(3[\s\-–—]*6[\s\-–—]*9|tesla|vortex|369|three[\s\-]*six[\s\-]*nine)\b/.test(lower)) return '369';
+  if (/\b(3[\s\-\u2013\u2014]*6[\s\-\u2013\u2014]*9|tesla|vortex|369|three[\s-]*six[\s-]*nine)\b/.test(lower)) return '369';
   if (/\b(equation|g\s*=|ecological.*health.*community|decision\s*equation|scoring\s*equation)\b/.test(lower)) return 'equation';
   if (/\b(love|relationship|partner|romantic|dating|marriage|heartbreak|boyfriend|girlfriend|spouse|attachment|intimacy|breakup|crush|couple)\b/.test(lower)) return 'love';
   if (/\b(community|govern|decision|collective|council|village|tribe|meeting|vote|consensus|steward|commons|neighbour|neighbor|dispute|mediat)\b/.test(lower)) return 'community';
