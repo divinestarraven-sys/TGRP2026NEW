@@ -21,3 +21,6 @@ verify_jwt = false
 
 [functions.unsubscribe]
 verify_jwt = false
+
+[functions.oracle-chat]
+verify_jwt = false

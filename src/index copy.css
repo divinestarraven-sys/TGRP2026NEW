@@ -41,20 +41,11 @@
 
   body {
     font-family: 'Inter', sans-serif;
-    font-size: 16px;
+    font-size: 24px;
     line-height: 1.5;
     background: #050a08;
     color: #f0f4f1;
     overflow-x: hidden;
-  }
-
-  /* Optional larger text mode */
-  html[data-text-size="large"] body {
-    font-size: 20px;
-  }
-  html[data-text-size="large"] .font-body,
-  html[data-text-size="large"] .font-sacred {
-    font-size: 1.15em;
   }
 
   ::selection {
@@ -351,3 +342,12 @@
     box-shadow: 0 0 20px rgba(104, 227, 212, 0.2), 0 0 60px rgba(104, 227, 212, 0.08);
   }
 }
+
+/* Shared controls: Oracle always sits left of music, with an explicit gap. */
+.resonance-tools { position: fixed; z-index: 60; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 1rem; max-width: calc(100vw - 2rem); }
+.tool-panel { right: 1rem; bottom: calc(6rem + env(safe-area-inset-bottom)); width: min(38rem, calc(100vw - 2rem)); max-height: calc(100dvh - 8rem); overflow-y: auto; }
+main { padding-bottom: 7rem; }
+h1, h2, h3, p, a, button { overflow-wrap: anywhere; }
+input, textarea, select { min-width: 0; max-width: 100%; }
+@media (max-width: 640px) { .ambient-label { display: none; } .ambient-toggle { padding: 1rem; } .resonance-tools { gap: .75rem; } }
+@media (max-width: 350px) { .resonance-tools { gap: .5rem; right: .5rem; max-width: calc(100vw - 1rem); } }

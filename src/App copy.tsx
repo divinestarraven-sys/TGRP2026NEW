@@ -5,6 +5,8 @@ import Layout from './components/Layout';
 import LoadingScreen from './components/LoadingScreen';
 import ScrollToTop from './components/ScrollToTop';
 
+
+const NotFound = lazy(() => import('./pages/NotFound'));
 const Home = lazy(() => import('./pages/Home'));
 const Framework = lazy(() => import('./pages/Framework'));
 const Pillars = lazy(() => import('./pages/Pillars'));
@@ -27,9 +29,6 @@ const IndustrialTransition = lazy(() => import('./pages/IndustrialTransition'));
 const Biohabitation = lazy(() => import('./pages/Biohabitation'));
 const ConfirmEmail = lazy(() => import('./pages/ConfirmEmail'));
 const Unsubscribe = lazy(() => import('./pages/Unsubscribe'));
-const NotFound = lazy(() => import('./pages/NotFound'));
-const SymbolicKeys = lazy(() => import('./pages/SymbolicKeys'));
-const SymbolicKeyDetail = lazy(() => import('./pages/SymbolicKeyDetail'));
 
 function App() {
   const location = useLocation();
@@ -62,8 +61,6 @@ function App() {
             <Route path="/biohabitation" element={<Biohabitation />} />
             <Route path="/confirm-email" element={<ConfirmEmail />} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />
-            <Route path="/symbolic-keys" element={<SymbolicKeys />} />
-            <Route path="/symbolic-keys/:slug" element={<SymbolicKeyDetail />} />
             {/* Legacy/alternate paths kept alive so old published links do not break */}
             <Route path="/media-gallery" element={<Navigate to="/gallery" replace />} />
             <Route path="/explore" element={<Navigate to="/gallery" replace />} />
@@ -80,6 +77,8 @@ function App() {
           </Routes>
         </Suspense>
       </AnimatePresence>
+
+
     </Layout>
   );
 }

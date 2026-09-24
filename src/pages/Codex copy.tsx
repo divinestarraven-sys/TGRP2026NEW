@@ -140,7 +140,28 @@ const dailyPractice = [
   },
 ];
 
-import { symbolicKeys as keysData } from '../data/symbolic-keys';
+const symbolicKeys = [
+  'Mystic Path',
+  'Seven Hermetic Principles',
+  'Magician / Manifestation',
+  'Sacred Relationship Mirror',
+  'Dingir / Star Above',
+  'Hand of Correspondence',
+  'Ancestors / Seers / Healers',
+  'Macrocosm / Microcosm',
+  'Student-Teacher Yin Yang Dragons',
+  'Raven-Phoenix Union',
+  'Hermetic / Zodiac / Elemental Wheel',
+  'Solar Eclipse Pyramid',
+  'Dark Winged Wanderer',
+  'Iron Rose / Hematite',
+  'Vajra / Null State',
+  'Prime / Multiplication Pattern Map',
+  'Solar Pyramid Alignment',
+  'Raven Stage / Sacred Performance Architecture',
+  'Vegvisir / Mythic Compass',
+  'Ogham Grove / Tree Alphabet',
+];
 
 const galleryImages = [
   {
@@ -176,7 +197,7 @@ export default function Codex() {
         <div className="container-sacred py-3 flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
           <div className="flex items-center gap-2">
             <Sprout className="w-4 h-4 text-emerald-glow" />
-            <span className="font-body text-moonlight-white/50 text-sm">
+            <span className="font-body text-moonlight-white/80 text-sm">
               Seed Members receive guided access to the Living Codex as it grows.
             </span>
           </div>
@@ -238,7 +259,7 @@ export default function Codex() {
           </motion.h1>
 
           <motion.p
-            className="font-sacred text-moonlight-white/50 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed"
+            className="font-sacred text-moonlight-white/80 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
@@ -282,7 +303,7 @@ export default function Codex() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="space-y-4 font-body text-moonlight-white/60 text-base sm:text-lg leading-relaxed">
+            <div className="space-y-4 font-body text-moonlight-white/80 text-base sm:text-lg leading-relaxed">
               <p>
                 The Ravenstar Mythic Intelligence Codex is a structured symbolic operating system
                 designed for those who walk between worlds — between the rational and the
@@ -331,7 +352,7 @@ export default function Codex() {
                       <h4 className="font-display text-base tracking-wider text-moonlight-white group-hover:text-emerald-glow transition-colors mb-2">
                         {system.name}
                       </h4>
-                      <p className="font-body text-moonlight-white/40 text-sm leading-relaxed">
+                      <p className="font-body text-moonlight-white/80 text-sm leading-relaxed">
                         {system.description}
                       </p>
                     </div>
@@ -364,7 +385,7 @@ export default function Codex() {
                     transition={{ delay: i * 0.08 }}
                   >
                     <span className="w-2 h-2 rounded-full bg-gold-sacred/60 mt-2 shrink-0" />
-                    <span className="font-body text-moonlight-white/60 text-sm sm:text-base leading-relaxed">
+                    <span className="font-body text-moonlight-white/80 text-sm sm:text-base leading-relaxed">
                       {point}
                     </span>
                   </motion.li>
@@ -382,7 +403,7 @@ export default function Codex() {
             transition={{ duration: 0.8 }}
           >
             <GlassCard className="p-6 sm:p-8 border border-solarpunk-biolum/10">
-              <p className="font-sacred text-moonlight-white/50 text-sm sm:text-base italic leading-relaxed">
+              <p className="font-sacred text-moonlight-white/80 text-sm sm:text-base italic leading-relaxed">
                 <span className="text-solarpunk-biolum font-display not-italic text-xs tracking-widest block mb-2">
                   NOTE
                 </span>
@@ -411,7 +432,7 @@ export default function Codex() {
                     <span className="font-display text-xs tracking-widest text-emerald-glow bg-emerald-glow/10 px-3 py-1 rounded-full whitespace-nowrap shrink-0">
                       {item.timing}
                     </span>
-                    <p className="font-sacred text-moonlight-white/60 text-sm sm:text-base italic leading-relaxed">
+                    <p className="font-sacred text-moonlight-white/80 text-sm sm:text-base italic leading-relaxed">
                       {item.prompt}
                     </p>
                   </div>
@@ -432,31 +453,25 @@ export default function Codex() {
               The 20 Symbolic Keys
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {keysData.map((key, i) => (
-                <Link key={i} to={`/symbolic-keys/${key.slug}`}>
-                  <GlassCard
-                    gold
-                    delay={i * 0.04}
-                    className="p-4 group cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="w-8 h-8 rounded-full bg-gold-sacred/10 border border-gold-sacred/20 flex items-center justify-center shrink-0">
-                        <span className="font-display text-xs text-gold-sacred">
-                          {key.number}
-                        </span>
+              {symbolicKeys.map((key, i) => (
+                <GlassCard
+                  key={i}
+                  gold
+                  delay={i * 0.04}
+                  className="p-4 group"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-gold-sacred/10 border border-gold-sacred/20 flex items-center justify-center shrink-0">
+                      <span className="font-display text-xs text-gold-sacred">
+                        {i + 1}
                       </span>
-                      <span className="font-body text-moonlight-white/70 text-sm group-hover:text-gold-sacred transition-colors leading-tight">
-                        {key.name}
-                      </span>
-                    </div>
-                  </GlassCard>
-                </Link>
+                    </span>
+                    <span className="font-body text-moonlight-white/80 text-sm group-hover:text-gold-sacred transition-colors leading-tight">
+                      {key}
+                    </span>
+                  </div>
+                </GlassCard>
               ))}
-            </div>
-            <div className="text-center mt-6">
-              <Link to="/symbolic-keys" className="inline-flex items-center gap-2 text-gold-sacred hover:text-gold-sacred/80 font-display text-sm tracking-wider transition-colors">
-                View Full Symbolic Keys Library &rarr;
-              </Link>
             </div>
           </motion.div>
 
@@ -469,7 +484,7 @@ export default function Codex() {
             transition={{ duration: 0.8 }}
           >
             <GlassCard className="p-6 border border-solarpunk-amber/10">
-              <p className="font-body text-moonlight-white/40 text-xs sm:text-sm leading-relaxed">
+              <p className="font-body text-moonlight-white/80 text-xs sm:text-sm leading-relaxed">
                 <span className="text-solarpunk-amber font-display tracking-widest block mb-2">
                   RIGHTS &amp; USAGE
                 </span>
@@ -553,13 +568,13 @@ export default function Codex() {
 
           <div className="max-w-3xl mx-auto mb-8">
             <div className="relative mb-6">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-moonlight-white/20" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-moonlight-white/80" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search the Codex..."
-                className="w-full pl-12 pr-4 py-3 rounded-xl glass border border-emerald-glow/10 text-sm font-body text-moonlight-white placeholder:text-moonlight-white/20 focus:outline-none focus:border-emerald-glow/30 transition-colors"
+                className="w-full pl-12 pr-4 py-3 rounded-xl glass border border-emerald-glow/10 text-sm font-body text-moonlight-white placeholder:text-moonlight-white/80 focus:outline-none focus:border-emerald-glow/30 transition-colors"
               />
             </div>
 
@@ -571,7 +586,7 @@ export default function Codex() {
                   className={`px-3 py-1.5 rounded-full text-xs font-display tracking-wider transition-all ${
                     activeCategory === cat
                       ? 'bg-emerald-glow/20 text-emerald-glow border border-emerald-glow/30'
-                      : 'glass text-moonlight-white/40 hover:text-moonlight-white/60'
+                      : 'glass text-moonlight-white/80 hover:text-moonlight-white/80'
                   }`}
                 >
                   {cat}
@@ -594,18 +609,18 @@ export default function Codex() {
                     <h3 className="font-display text-lg tracking-wider text-moonlight-white group-hover:text-emerald-glow transition-colors mb-2">
                       {entry.title}
                     </h3>
-                    <p className="font-body text-moonlight-white/40 text-sm leading-relaxed">
+                    <p className="font-body text-moonlight-white/80 text-sm leading-relaxed">
                       {entry.desc}
                     </p>
                   </div>
-                  <ChevronRight className="w-5 h-5 text-moonlight-white/10 group-hover:text-emerald-glow/40 transition-colors shrink-0 mt-2" />
+                  <ChevronRight className="w-5 h-5 text-moonlight-white/80 group-hover:text-emerald-glow/40 transition-colors shrink-0 mt-2" />
                 </div>
               </GlassCard>
             ))}
 
             {filtered.length === 0 && (
               <div className="text-center py-12">
-                <p className="font-sacred text-moonlight-white/30">
+                <p className="font-sacred text-moonlight-white/80">
                   No entries found. The Codex grows with time.
                 </p>
               </div>

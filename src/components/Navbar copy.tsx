@@ -29,7 +29,6 @@ const navLinks: NavLink[] = [
   { path: '/seed-membership', label: 'Seed', group: 'Membership' },
   { path: '/mycelium-membership', label: 'Mycelium', group: 'Membership' },
   { path: '/join', label: 'Join', group: 'Membership' },
-  { path: '/symbolic-keys', label: 'Symbolic Keys', group: 'Knowledge' },
   { path: '/contact', label: 'Contact', group: 'About' },
 ];
 
@@ -96,12 +95,6 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  // Restore text-size preference
-  useEffect(() => {
-    const saved = localStorage.getItem('grp-text-size');
-    if (saved === 'large') document.documentElement.setAttribute('data-text-size', 'large');
-  }, []);
-
   const handleMouseEnter = () => {
     if (!isDesktop()) return;
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -119,7 +112,6 @@ export default function Navbar() {
 
   const showFull = !minimized || nearTop || isOpen;
 
-  const colCount = 10;
 
   return (
     <nav
@@ -203,49 +195,31 @@ export default function Navbar() {
 
             {/* Desktop mini-links when minimized */}
             {minimized && !nearTop && !isOpen && (
-              <div className="hidden xl:flex items-center gap-3 text-xs font-body text-moonlight-white/30">
+              <div className="hidden xl:flex items-center gap-3 text-xs font-body text-moonlight-white/80">
                 <span>Hover or scroll to top for full navigation</span>
               </div>
             )}
 
-            <div className="flex items-center gap-2">
-              {/* Text size toggle */}
-              <button
-                onClick={() => {
-                  const root = document.documentElement;
-                  const current = root.getAttribute('data-text-size') || 'normal';
-                  const next = current === 'normal' ? 'large' : 'normal';
-                  root.setAttribute('data-text-size', next);
-                  localStorage.setItem('grp-text-size', next);
-                }}
-                className="p-2 rounded-lg text-moonlight-white/50 hover:text-emerald-glow transition-colors"
-                aria-label="Toggle larger text"
-                title="Toggle larger text"
-              >
-                <span className="font-display text-xs font-bold leading-none">Aa</span>
-              </button>
-
-              {/* Mobile hamburger */}
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="xl:hidden p-2 rounded-lg text-moonlight-white/70 hover:text-emerald-glow transition-colors"
-                aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-                aria-expanded={isOpen}
-                aria-controls="mobile-nav-menu"
-              >
-                <AnimatePresence mode="wait" initial={false}>
-                  {isOpen ? (
-                    <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                      <X className="w-6 h-6" />
-                    </motion.div>
-                  ) : (
-                    <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                      <Menu className="w-6 h-6" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </button>
-            </div>
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="xl:hidden p-2 rounded-lg text-moonlight-white/80 hover:text-emerald-glow transition-colors"
+              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav-menu"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {isOpen ? (
+                  <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <X className="w-6 h-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <Menu className="w-6 h-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
           </div>
 
           {/* Desktop two-row mega-menu grid */}
@@ -255,7 +229,7 @@ export default function Navbar() {
                 className="mx-auto"
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))`,
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(10rem, 1fr))',
                   gridTemplateRows: 'repeat(2, auto)',
                   gap: '0.35rem 0.5rem',
                   width: 'min(96vw, 1500px)',
@@ -275,7 +249,7 @@ export default function Navbar() {
                         minWidth: 0,
                         whiteSpace: 'normal',
                         lineHeight: 1.15,
-                        fontSize: 'clamp(0.72rem, 0.85vw, 0.9rem)',
+                        fontSize: 'clamp(1.08rem, 1.275vw, 1.35rem)',
                         padding: '0.45rem 0.35rem',
                         overflowWrap: 'anywhere',
                         color: isActive ? '#10b981' : 'rgba(240,244,241,0.55)',
@@ -338,7 +312,7 @@ export default function Navbar() {
                 if (groupLinks.length === 0) return null;
                 return (
                   <div key={groupName} className="mb-2" role="group" aria-label={groupName}>
-                    <p className="font-display text-[10px] tracking-[0.3em] uppercase px-4 py-1"
+                    <p className="font-display text-[15px] tracking-[0.3em] uppercase px-4 py-1"
                       style={{ color: groupColors[groupName] || 'rgba(212,168,67,0.4)' }}
                       aria-hidden="true">
                       {groupName}
@@ -352,7 +326,7 @@ export default function Navbar() {
                         className={`block px-4 py-2.5 rounded-lg text-sm font-body tracking-wide transition-all ${
                           location.pathname === link.path
                             ? 'text-emerald-glow bg-emerald-glow/8'
-                            : 'text-moonlight-white/60 hover:text-moonlight-white/90 hover:bg-emerald-glow/5'
+                            : 'text-moonlight-white/80 hover:text-moonlight-white/90 hover:bg-emerald-glow/5'
                         }`}
                       >
                         {link.label}

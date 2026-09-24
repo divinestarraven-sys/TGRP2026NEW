@@ -3,8 +3,11 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import BioluminescentField from './BioluminescentField';
 import AuroraEffect from './AuroraEffect';
+import OracleChat from './OracleChat';
 import Starfield from './Starfield';
-import FloatingToolbar from './FloatingToolbar';
+import ResonanceJournal from './ResonanceJournal';
+import HarmonicPlayer from './HarmonicPlayer';
+import AmbientAudioPlayer from './AmbientAudioPlayer';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -16,7 +19,12 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Navbar />
       <main id="main-content" className="relative z-10">{children}</main>
       <Footer />
-      <FloatingToolbar />
+      <div className="resonance-tools" role="group" aria-label="Project tools">
+        <ResonanceJournal />
+        <HarmonicPlayer />
+        <OracleChat />
+        <AmbientAudioPlayer />
+      </div>
     </div>
   );
 }
