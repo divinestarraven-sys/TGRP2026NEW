@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Leaf } from 'lucide-react';
@@ -52,6 +52,7 @@ export default function Navbar() {
   const [nearTop, setNearTop] = useState(false);
   const location = useLocation();
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const isDesktop = () => typeof window !== 'undefined' && window.innerWidth >= 1280;
 
@@ -78,6 +79,22 @@ export default function Navbar() {
     setIsOpen(false);
   }, [location]);
 
+  // Keyboard: close on Escape
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape' && isOpen) setIsOpen(false);
+  }, [isOpen]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
   const handleMouseEnter = () => {
     if (!isDesktop()) return;
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -98,10 +115,11 @@ export default function Navbar() {
   const colCount = 10;
 
   return (
-    <div
+    <nav
       className="fixed top-0 left-0 right-0 z-50"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      aria-label="Main navigation"
     >
       {/* Persistent glowing top rail */}
       <div className="absolute top-0 left-0 right-0 h-[2px] z-20 pointer-events-none"
@@ -188,6 +206,8 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               className="xl:hidden p-2 rounded-lg text-moonlight-white/70 hover:text-emerald-glow transition-colors"
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav-menu"
             >
               <AnimatePresence mode="wait" initial={false}>
                 {isOpen ? (
@@ -205,7 +225,7 @@ export default function Navbar() {
 
           {/* Desktop two-row mega-menu grid */}
           {showFull && (
-            <div className="hidden xl:block pb-3">
+            <div className="hidden xl:block pb-3" role="menubar">
               <div
                 className="mx-auto"
                 style={{
@@ -223,7 +243,9 @@ export default function Navbar() {
                     <Link
                       key={link.path}
                       to={link.path}
-                      className="relative text-center transition-all duration-300"
+                      role="menuitem"
+                      aria-current={isActive ? 'page' : undefined}
+                      className="relative text-center transition-all duration-300 rounded-md"
                       style={{
                         minWidth: 0,
                         whiteSpace: 'normal',
@@ -231,17 +253,18 @@ export default function Navbar() {
                         fontSize: 'clamp(0.72rem, 0.85vw, 0.9rem)',
                         padding: '0.45rem 0.35rem',
                         overflowWrap: 'anywhere',
-                        color: isActive ? '#10b981' : 'rgba(240,244,241,0.45)',
+                        color: isActive ? '#10b981' : 'rgba(240,244,241,0.55)',
                       }}
                       onMouseEnter={(e) => {
                         if (!isActive) e.currentTarget.style.color = 'rgba(240,244,241,0.9)';
                       }}
                       onMouseLeave={(e) => {
-                        if (!isActive) e.currentTarget.style.color = 'rgba(240,244,241,0.45)';
+                        if (!isActive) e.currentTarget.style.color = 'rgba(240,244,241,0.55)';
                       }}
                     >
                       <span
                         className="block w-[3px] h-[3px] rounded-full mx-auto mb-1 opacity-60"
+                        aria-hidden="true"
                         style={{ backgroundColor: groupColors[link.group] || 'rgba(16,185,129,0.4)' }}
                       />
                       {link.label}
@@ -269,6 +292,9 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="mobile-nav-menu"
+            ref={mobileMenuRef}
+            role="menu"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -277,26 +303,31 @@ export default function Navbar() {
             style={{
               background: 'linear-gradient(180deg, rgba(3,12,8,0.98) 0%, rgba(7,21,16,0.97) 100%)',
               borderColor: 'rgba(212,168,67,0.15)',
+              maxHeight: '75vh',
+              overflowY: 'auto',
             }}
           >
-            <div className="container-sacred py-4 space-y-1 max-h-[75vh] overflow-y-auto">
+            <div className="container-sacred py-4 space-y-1">
               {groupOrder.map((groupName) => {
                 const groupLinks = navLinks.filter((l) => l.group === groupName);
                 if (groupLinks.length === 0) return null;
                 return (
-                  <div key={groupName} className="mb-2">
+                  <div key={groupName} className="mb-2" role="group" aria-label={groupName}>
                     <p className="font-display text-[10px] tracking-[0.3em] uppercase px-4 py-1"
-                      style={{ color: groupColors[groupName] || 'rgba(212,168,67,0.4)' }}>
+                      style={{ color: groupColors[groupName] || 'rgba(212,168,67,0.4)' }}
+                      aria-hidden="true">
                       {groupName}
                     </p>
                     {groupLinks.map((link) => (
                       <Link
                         key={link.path}
                         to={link.path}
+                        role="menuitem"
+                        aria-current={location.pathname === link.path ? 'page' : undefined}
                         className={`block px-4 py-2.5 rounded-lg text-sm font-body tracking-wide transition-all ${
                           location.pathname === link.path
                             ? 'text-emerald-glow bg-emerald-glow/8'
-                            : 'text-moonlight-white/50 hover:text-moonlight-white/90 hover:bg-emerald-glow/5'
+                            : 'text-moonlight-white/60 hover:text-moonlight-white/90 hover:bg-emerald-glow/5'
                         }`}
                       >
                         {link.label}
@@ -309,6 +340,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </nav>
   );
 }

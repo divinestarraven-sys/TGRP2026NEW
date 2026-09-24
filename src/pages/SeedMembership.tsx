@@ -380,7 +380,7 @@ export default function SeedMembership() {
                 <h3 className="font-display text-xl tracking-wider text-gradient-emerald mb-2">
                   Check Your Email
                 </h3>
-                <p className="font-body text-moonlight-white/50 leading-relaxed text-sm">
+                <p className="font-body text-moonlight-white/70 leading-relaxed text-sm">
                   We have sent a confirmation link to your email address.
                   Please open it and press the Confirm button to complete your
                   Seed access request. The link expires in 24 hours.
@@ -400,7 +400,7 @@ export default function SeedMembership() {
                 <h3 className="font-display text-xl tracking-wider text-gradient-gold mb-2">
                   Request Saved
                 </h3>
-                <p className="font-body text-moonlight-white/50 leading-relaxed text-sm mb-4">
+                <p className="font-body text-moonlight-white/70 leading-relaxed text-sm mb-4">
                   Your Seed access request has been saved, but we were unable to
                   send the confirmation email right now. Please try submitting
                   again in a few minutes to receive your confirmation link.
@@ -417,7 +417,7 @@ export default function SeedMembership() {
             <GlassCard gold className="p-8">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="seed-name" className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">NAME</label>
+                  <label htmlFor="seed-name" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">NAME</label>
                   <input
                     id="seed-name"
                     type="text"
@@ -430,7 +430,7 @@ export default function SeedMembership() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="seed-email" className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">EMAIL</label>
+                  <label htmlFor="seed-email" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">EMAIL</label>
                   <input
                     id="seed-email"
                     type="email"
@@ -443,7 +443,7 @@ export default function SeedMembership() {
                   />
                 </div>
                 <div>
-                  <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">INTERESTS</label>
+                  <label className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">INTERESTS</label>
                   <div className="flex flex-wrap gap-2">
                     {interestOptions.map((opt) => (
                       <button
@@ -463,7 +463,7 @@ export default function SeedMembership() {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="seed-message" className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">MESSAGE (OPTIONAL)</label>
+                  <label htmlFor="seed-message" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">MESSAGE (OPTIONAL)</label>
                   <textarea
                     id="seed-message"
                     value={message}
@@ -480,13 +480,13 @@ export default function SeedMembership() {
                     onChange={(e) => setNewsletterConsent(e.target.checked)}
                     className="mt-0.5 w-4 h-4 rounded border-emerald-glow/20 bg-cosmic-deep/50 text-emerald-glow focus:ring-emerald-glow/30"
                   />
-                  <span className="font-body text-moonlight-white/40 text-xs leading-relaxed">
+                  <span className="font-body text-moonlight-white/70 text-xs leading-relaxed">
                     Send me Green Resonance Project news and updates.
                   </span>
                 </label>
 
                 {formState === 'error' && (
-                  <p className="text-red-400/80 text-xs font-body">
+                  <p role="alert" className="text-red-400/80 text-xs font-body">
                     Something went wrong. Please try again.
                   </p>
                 )}

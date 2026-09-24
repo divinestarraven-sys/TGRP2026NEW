@@ -27,8 +27,22 @@
     scroll-behavior: smooth;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   body {
     font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
     background: #050a08;
     color: #f0f4f1;
     overflow-x: hidden;
@@ -37,6 +51,33 @@
   ::selection {
     background: rgba(16, 185, 129, 0.3);
     color: #f0f4f1;
+  }
+
+  /* Visible focus rings for keyboard navigation */
+  :focus-visible {
+    outline: 2px solid #10b981;
+    outline-offset: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Skip-to-content link */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    z-index: 9999;
+    padding: 8px 16px;
+    background: #10b981;
+    color: #050a08;
+    font-weight: 600;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    top: 0;
   }
 
   /* Image safety - prevent overflow and ensure proper sizing */

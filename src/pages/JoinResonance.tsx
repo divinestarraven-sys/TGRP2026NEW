@@ -249,7 +249,7 @@ export default function JoinResonance() {
                 <h3 className="font-display text-xl tracking-wider text-gradient-emerald mb-2">
                   Check Your Email
                 </h3>
-                <p className="font-body text-moonlight-white/50 text-sm leading-relaxed">
+                <p className="font-body text-moonlight-white/70 text-sm leading-relaxed">
                   We have sent a confirmation link to your email address.
                   Please open it and press the Confirm button to complete your
                   subscription. The link expires in 24 hours.
@@ -269,7 +269,7 @@ export default function JoinResonance() {
                 <h3 className="font-display text-xl tracking-wider text-gradient-gold mb-2">
                   Request Saved
                 </h3>
-                <p className="font-body text-moonlight-white/50 text-sm leading-relaxed mb-4">
+                <p className="font-body text-moonlight-white/70 text-sm leading-relaxed mb-4">
                   Your details have been saved, but we had trouble sending the confirmation email. Please try again in a few minutes.
                 </p>
                 <button
@@ -284,8 +284,9 @@ export default function JoinResonance() {
             <GlassCard gold className="p-8">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">NAME</label>
+                  <label htmlFor="join-name" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">NAME</label>
                   <input
+                    id="join-name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -295,8 +296,9 @@ export default function JoinResonance() {
                   />
                 </div>
                 <div>
-                  <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">EMAIL</label>
+                  <label htmlFor="join-email" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">EMAIL</label>
                   <input
+                    id="join-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -306,8 +308,9 @@ export default function JoinResonance() {
                   />
                 </div>
                 <div>
-                  <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">INTEREST</label>
+                  <label htmlFor="join-interest" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">INTEREST</label>
                   <select
+                    id="join-interest"
                     value={interest}
                     onChange={(e) => setInterest(e.target.value)}
                     className="w-full px-4 py-3 rounded-xl bg-cosmic-deep/50 border border-emerald-glow/10 text-sm font-body text-moonlight-white focus:outline-none focus:border-emerald-glow/30 transition-colors appearance-none"
@@ -323,28 +326,30 @@ export default function JoinResonance() {
                 </div>
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
+                    id="join-newsletter"
                     type="checkbox"
                     checked={newsletterConsent}
                     onChange={(e) => setNewsletterConsent(e.target.checked)}
                     className="mt-0.5 w-4 h-4 rounded border-emerald-glow/20 bg-cosmic-deep/50 text-emerald-glow focus:ring-emerald-glow/30"
                   />
-                  <span className="font-body text-moonlight-white/40 text-xs leading-relaxed">
+                  <span className="font-body text-moonlight-white/70 text-xs leading-relaxed">
                     Send me Green Resonance Project news and updates.
                   </span>
                 </label>
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
+                    id="join-community"
                     type="checkbox"
                     checked={communityConsent}
                     onChange={(e) => setCommunityConsent(e.target.checked)}
                     className="mt-0.5 w-4 h-4 rounded border-emerald-glow/20 bg-cosmic-deep/50 text-emerald-glow focus:ring-emerald-glow/30"
                   />
-                  <span className="font-body text-moonlight-white/40 text-xs leading-relaxed">
+                  <span className="font-body text-moonlight-white/70 text-xs leading-relaxed">
                     Tell me about community events, workshops and gatherings.
                   </span>
                 </label>
                 {formState === 'error' && (
-                  <p className="text-red-400/80 text-xs font-body">{errorMsg}</p>
+                  <p role="alert" className="text-red-400/80 text-xs font-body">{errorMsg}</p>
                 )}
                 <button
                   type="submit"

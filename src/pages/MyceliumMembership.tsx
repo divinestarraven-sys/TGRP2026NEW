@@ -341,7 +341,7 @@ export default function MyceliumMembership() {
             <h3 className="font-display text-2xl tracking-wider text-gradient-harvest mb-2">
               Request Access — Join Waitlist
             </h3>
-            <p className="font-body text-moonlight-white/40 text-sm mb-6">
+            <p className="font-body text-moonlight-white/70 text-sm mb-6">
               Register your interest and we will notify you when Mycelium Membership opens.
             </p>
 
@@ -358,7 +358,7 @@ export default function MyceliumMembership() {
                 <h4 className="font-display text-lg tracking-wider text-gradient-biolum mb-2">
                   Check Your Email
                 </h4>
-                <p className="font-body text-moonlight-white/40 text-sm leading-relaxed">
+                <p className="font-body text-moonlight-white/70 text-sm leading-relaxed">
                   We have sent a confirmation link to your email address.
                   Please open it and press the Confirm button to complete your
                   Mycelium interest registration. The link expires in 24 hours.
@@ -377,7 +377,7 @@ export default function MyceliumMembership() {
                 <h4 className="font-display text-lg tracking-wider text-gradient-gold mb-2">
                   Request Saved
                 </h4>
-                <p className="font-body text-moonlight-white/40 text-sm leading-relaxed mb-4">
+                <p className="font-body text-moonlight-white/70 text-sm leading-relaxed mb-4">
                   Your interest has been saved, but we had trouble sending the confirmation email. Please try again in a few minutes.
                 </p>
                 <button
@@ -391,8 +391,9 @@ export default function MyceliumMembership() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">NAME</label>
+                    <label htmlFor="mycelium-name" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">NAME</label>
                     <input
+                      id="mycelium-name"
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -402,8 +403,9 @@ export default function MyceliumMembership() {
                     />
                   </div>
                   <div>
-                    <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">EMAIL</label>
+                    <label htmlFor="mycelium-email" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">EMAIL</label>
                     <input
+                      id="mycelium-email"
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -414,8 +416,9 @@ export default function MyceliumMembership() {
                   </div>
                 </div>
                 <div>
-                  <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">MEMBERSHIP INTEREST</label>
+                  <label htmlFor="mycelium-interest" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">MEMBERSHIP INTEREST</label>
                   <select
+                    id="mycelium-interest"
                     value={interest}
                     onChange={(e) => setInterest(e.target.value)}
                     required
@@ -431,8 +434,9 @@ export default function MyceliumMembership() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">MESSAGE (OPTIONAL)</label>
+                  <label htmlFor="mycelium-message" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">MESSAGE (OPTIONAL)</label>
                   <textarea
+                    id="mycelium-message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     rows={3}
@@ -442,7 +446,7 @@ export default function MyceliumMembership() {
                 </div>
 
                 {formState === 'error' && (
-                  <p className="text-red-400/80 text-xs font-body">Something went wrong. Please try again.</p>
+                  <p role="alert" className="text-red-400/80 text-xs font-body">Something went wrong. Please try again.</p>
                 )}
 
                 <button

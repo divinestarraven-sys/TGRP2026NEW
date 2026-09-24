@@ -141,7 +141,7 @@ export default function Contact() {
                   <h3 className="font-display text-xl tracking-wider text-gradient-emerald mb-2">
                     Signal Received
                   </h3>
-                  <p className="font-body text-moonlight-white/50 text-sm leading-relaxed">
+                  <p className="font-body text-moonlight-white/70 text-sm leading-relaxed">
                     Your message has entered the weave. We will respond in resonance.
                     {newsletterConsent && ' Check your email for a confirmation link to complete your newsletter subscription.'}
                   </p>
@@ -160,7 +160,7 @@ export default function Contact() {
                   <h3 className="font-display text-xl tracking-wider text-gradient-gold mb-2">
                     Message Received
                   </h3>
-                  <p className="font-body text-moonlight-white/50 text-sm leading-relaxed mb-4">
+                  <p className="font-body text-moonlight-white/70 text-sm leading-relaxed mb-4">
                     Your contact message has been saved, but we had trouble sending the newsletter confirmation email. You can try submitting again later.
                   </p>
                   <button
@@ -176,8 +176,9 @@ export default function Contact() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">NAME</label>
+                      <label htmlFor="contact-name" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">NAME</label>
                       <input
+                        id="contact-name"
                         type="text"
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -187,8 +188,9 @@ export default function Contact() {
                       />
                     </div>
                     <div>
-                      <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">EMAIL</label>
+                      <label htmlFor="contact-email" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">EMAIL</label>
                       <input
+                        id="contact-email"
                         type="email"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -199,8 +201,9 @@ export default function Contact() {
                     </div>
                   </div>
                   <div>
-                    <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">INQUIRY TYPE</label>
+                    <label htmlFor="contact-type" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">INQUIRY TYPE</label>
                     <select
+                      id="contact-type"
                       value={form.type}
                       onChange={(e) => setForm({ ...form, type: e.target.value })}
                       required
@@ -215,8 +218,9 @@ export default function Contact() {
                     </select>
                   </div>
                   <div>
-                    <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">SUBJECT</label>
+                    <label htmlFor="contact-subject" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">SUBJECT</label>
                     <input
+                      id="contact-subject"
                       type="text"
                       value={form.subject}
                       onChange={(e) => setForm({ ...form, subject: e.target.value })}
@@ -226,8 +230,9 @@ export default function Contact() {
                     />
                   </div>
                   <div>
-                    <label className="block font-display text-xs tracking-widest text-moonlight-white/40 mb-2">MESSAGE</label>
+                    <label htmlFor="contact-message" className="block font-display text-xs tracking-widest text-moonlight-white/70 mb-2">MESSAGE</label>
                     <textarea
+                      id="contact-message"
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       required
@@ -236,19 +241,20 @@ export default function Contact() {
                       placeholder="Speak your truth..."
                     />
                   </div>
-                  <label className="flex items-start gap-3 cursor-pointer">
+                  <label htmlFor="contact-newsletter" className="flex items-start gap-3 cursor-pointer">
                     <input
+                      id="contact-newsletter"
                       type="checkbox"
                       checked={newsletterConsent}
                       onChange={(e) => setNewsletterConsent(e.target.checked)}
                       className="mt-0.5 w-4 h-4 rounded border-emerald-glow/20 bg-cosmic-deep/50 text-emerald-glow focus:ring-emerald-glow/30"
                     />
-                    <span className="font-body text-moonlight-white/40 text-xs leading-relaxed">
+                    <span className="font-body text-moonlight-white/70 text-xs leading-relaxed">
                       Send me Green Resonance Project news and updates.
                     </span>
                   </label>
                   {formState === 'error' && (
-                    <p className="text-red-400/80 text-xs font-body">{errorMsg}</p>
+                    <p role="alert" className="text-red-400/80 text-xs font-body">{errorMsg}</p>
                   )}
                   <button
                     type="submit"
