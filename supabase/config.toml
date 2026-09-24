@@ -1,0 +1,23 @@
+[functions.resend-sync]
+verify_jwt = true
+
+[functions.seed-submit]
+verify_jwt = false
+
+[functions.confirm-email]
+verify_jwt = false
+
+[functions.contact-submit]
+verify_jwt = false
+
+[functions.mycelium-submit]
+verify_jwt = false
+
+[functions.newsletter-submit]
+verify_jwt = false
+
+[functions.resend-webhook]
+verify_jwt = false
+
+[functions.unsubscribe]
+verify_jwt = false

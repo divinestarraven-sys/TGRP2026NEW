@@ -12,7 +12,6 @@ import MyceliumNetwork from '../components/MyceliumNetwork';
 import CymaticWaves from '../components/CymaticWaves';
 import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
-import { supabase } from '../lib/supabase';
 import {
   MYCELIUM_PRICE_USD,
   MYCELIUM_STRIPE_PAYMENT_LINK,
@@ -30,7 +29,7 @@ export default function MyceliumMembership() {
   const [email, setEmail] = useState('');
   const [interest, setInterest] = useState('');
   const [message, setMessage] = useState('');
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'delivery_warning' | 'error'>('idle');
 
   const handleJoin = () => {
     if (MYCELIUM_STRIPE_PAYMENT_LINK) {
@@ -45,14 +44,29 @@ export default function MyceliumMembership() {
     e.preventDefault();
     setFormState('submitting');
 
-    const { error } = await supabase
-      .from('mycelium_membership_waitlist')
-      .insert({ name, email, interest, message });
-
-    if (error) {
-      setFormState(error.code === '23505' ? 'success' : 'error');
-    } else {
-      setFormState('success');
+    try {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/mycelium-submit`;
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, interest, message }),
+      });
+      if (!res.ok) {
+        setFormState('error');
+        return;
+      }
+      const data = await res.json();
+      if (data.ok) {
+        if (data.delivery === 'unavailable' || data.delivery === 'uncertain') {
+          setFormState('delivery_warning');
+        } else {
+          setFormState('success');
+        }
+      } else {
+        setFormState('error');
+      }
+    } catch {
+      setFormState('error');
     }
   };
 
@@ -290,11 +304,9 @@ export default function MyceliumMembership() {
                 {/* Stripe placeholder notice */}
                 {!MYCELIUM_STRIPE_PAYMENT_LINK && (
                   <div className="p-4 rounded-xl bg-solarpunk-amber/8 border border-solarpunk-amber/20 text-xs font-body text-solarpunk-amber/70 leading-relaxed">
-                    Payment not yet configured. Add{' '}
-                    <code className="bg-black/30 px-1 py-0.5 rounded text-solarpunk-amber">
-                      VITE_MYCELIUM_STRIPE_PAYMENT_LINK
-                    </code>{' '}
-                    to your environment variables when your Stripe Payment Link is ready.
+                    Payments are not yet active. Use the waitlist form below to
+                    register your interest and we will notify you when Mycelium
+                    Membership opens.
                   </div>
                 )}
               </div>
@@ -319,7 +331,6 @@ export default function MyceliumMembership() {
                 </button>
                 <p className="font-body text-moonlight-white/25 text-xs mt-3 leading-relaxed">
                   Secure payment via Stripe Checkout.
-                  {/* TODO: Connect VITE_MYCELIUM_STRIPE_PAYMENT_LINK once live. */}
                 </p>
               </div>
             </div>
@@ -345,11 +356,36 @@ export default function MyceliumMembership() {
                   <Network className="w-7 h-7 text-emerald-glow" />
                 </div>
                 <h4 className="font-display text-lg tracking-wider text-gradient-biolum mb-2">
-                  Thank you. Your mycelium thread has been planted.
+                  Check Your Email
                 </h4>
-                <p className="font-sacred text-moonlight-white/40 text-sm">
-                  We will reach out when membership opens.
+                <p className="font-body text-moonlight-white/40 text-sm leading-relaxed">
+                  We have sent a confirmation link to your email address.
+                  Please open it and press the Confirm button to complete your
+                  Mycelium interest registration. The link expires in 24 hours.
                 </p>
+              </motion.div>
+            ) : formState === 'delivery_warning' ? (
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.4 }}
+                className="text-center py-6"
+              >
+                <div className="w-14 h-14 rounded-full bg-gold-sacred/10 flex items-center justify-center mx-auto mb-4">
+                  <Network className="w-7 h-7 text-gold-sacred" />
+                </div>
+                <h4 className="font-display text-lg tracking-wider text-gradient-gold mb-2">
+                  Request Saved
+                </h4>
+                <p className="font-body text-moonlight-white/40 text-sm leading-relaxed mb-4">
+                  Your interest has been saved, but we had trouble sending the confirmation email. Please try again in a few minutes.
+                </p>
+                <button
+                  onClick={() => setFormState('idle')}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gold-sacred/15 border border-gold-sacred/25 hover:bg-gold-sacred/25 transition-all font-display text-xs tracking-widest text-gold-sacred"
+                >
+                  Try Again
+                </button>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">

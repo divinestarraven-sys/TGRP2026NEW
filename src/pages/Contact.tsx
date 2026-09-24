@@ -5,8 +5,6 @@ import GlassCard from '../components/GlassCard';
 import SacredGeometry from '../components/SacredGeometry';
 import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
-import { supabase } from '../lib/supabase';
-
 const CONTACT_EMAIL = 'DivineStarRaven@gmail.com';
 
 const contactMethods = [
@@ -16,7 +14,7 @@ const contactMethods = [
 ];
 
 export default function Contact() {
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'delivery_warning' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [newsletterConsent, setNewsletterConsent] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', type: '' });
@@ -26,20 +24,39 @@ export default function Contact() {
     setFormState('submitting');
     setErrorMsg('');
 
-    const { error } = await supabase.from('contact_messages').insert({
-      name: form.name,
-      email: form.email.toLowerCase().trim(),
-      subject: form.subject,
-      inquiry_type: form.type,
-      message: form.message,
-      newsletter_consent: newsletterConsent,
-    });
-
-    if (error) {
+    try {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/contact-submit`;
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          inquiry_type: form.type,
+          message: form.message,
+          newsletter_consent: newsletterConsent,
+        }),
+      });
+      if (!res.ok) {
+        setFormState('error');
+        setErrorMsg('Something went wrong. Please try again.');
+        return;
+      }
+      const data = await res.json();
+      if (data.ok) {
+        if (data.delivery === 'unavailable' || data.delivery === 'uncertain') {
+          setFormState('delivery_warning');
+        } else {
+          setFormState('success');
+        }
+      } else {
+        setFormState('error');
+        setErrorMsg('Something went wrong. Please try again.');
+      }
+    } catch {
       setFormState('error');
       setErrorMsg('Something went wrong. Please try again.');
-    } else {
-      setFormState('success');
     }
   };
 
@@ -111,7 +128,50 @@ export default function Contact() {
               subtitle="Every message is a thread in the weave."
             />
 
-            {formState !== 'success' ? (
+            {formState === 'success' ? (
+              <GlassCard gold className="p-8 text-center">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="w-16 h-16 rounded-full bg-emerald-glow/10 flex items-center justify-center mx-auto mb-4">
+                    <Check className="w-8 h-8 text-emerald-glow" />
+                  </div>
+                  <h3 className="font-display text-xl tracking-wider text-gradient-emerald mb-2">
+                    Signal Received
+                  </h3>
+                  <p className="font-body text-moonlight-white/50 text-sm leading-relaxed">
+                    Your message has entered the weave. We will respond in resonance.
+                    {newsletterConsent && ' Check your email for a confirmation link to complete your newsletter subscription.'}
+                  </p>
+                </motion.div>
+              </GlassCard>
+            ) : formState === 'delivery_warning' ? (
+              <GlassCard gold className="p-8 text-center">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="w-16 h-16 rounded-full bg-gold-sacred/10 flex items-center justify-center mx-auto mb-4">
+                    <Check className="w-8 h-8 text-gold-sacred" />
+                  </div>
+                  <h3 className="font-display text-xl tracking-wider text-gradient-gold mb-2">
+                    Message Received
+                  </h3>
+                  <p className="font-body text-moonlight-white/50 text-sm leading-relaxed mb-4">
+                    Your contact message has been saved, but we had trouble sending the newsletter confirmation email. You can try submitting again later.
+                  </p>
+                  <button
+                    onClick={() => setFormState('idle')}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gold-sacred/15 border border-gold-sacred/25 hover:bg-gold-sacred/25 transition-all font-display text-xs tracking-widest text-gold-sacred"
+                  >
+                    Try Again
+                  </button>
+                </motion.div>
+              </GlassCard>
+            ) : formState !== 'idle' && formState !== 'submitting' && formState !== 'error' ? null : (
               <GlassCard className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -208,24 +268,6 @@ export default function Contact() {
                     )}
                   </button>
                 </form>
-              </GlassCard>
-            ) : (
-              <GlassCard gold className="p-8 text-center">
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="w-16 h-16 rounded-full bg-emerald-glow/10 flex items-center justify-center mx-auto mb-4">
-                    <Check className="w-8 h-8 text-emerald-glow" />
-                  </div>
-                  <h3 className="font-display text-xl tracking-wider text-gradient-emerald mb-2">
-                    Signal Received
-                  </h3>
-                  <p className="font-sacred text-moonlight-white/50 leading-relaxed">
-                    Your message has entered the weave. We will respond in resonance.
-                  </p>
-                </motion.div>
               </GlassCard>
             )}
           </div>

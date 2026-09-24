@@ -26,6 +26,8 @@ const MyceliumMembership = lazy(() => import('./pages/MyceliumMembership'));
 const StewardshipGames = lazy(() => import('./pages/StewardshipGames'));
 const IndustrialTransition = lazy(() => import('./pages/IndustrialTransition'));
 const Biohabitation = lazy(() => import('./pages/Biohabitation'));
+const ConfirmEmail = lazy(() => import('./pages/ConfirmEmail'));
+const Unsubscribe = lazy(() => import('./pages/Unsubscribe'));
 
 function App() {
   const location = useLocation();
@@ -56,6 +58,8 @@ function App() {
             <Route path="/stewardship-games" element={<StewardshipGames />} />
             <Route path="/industrial-transition" element={<IndustrialTransition />} />
             <Route path="/biohabitation" element={<Biohabitation />} />
+            <Route path="/confirm-email" element={<ConfirmEmail />} />
+            <Route path="/unsubscribe" element={<Unsubscribe />} />
             {/* Legacy/alternate paths kept alive so old published links do not break */}
             <Route path="/media-gallery" element={<Navigate to="/gallery" replace />} />
             <Route path="/explore" element={<Navigate to="/gallery" replace />} />

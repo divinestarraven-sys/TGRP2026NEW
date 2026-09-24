@@ -12,7 +12,6 @@ import CymaticWaves from '../components/CymaticWaves';
 import MyceliumNetwork from '../components/MyceliumNetwork';
 import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
-import { supabase } from '../lib/supabase';
 
 const codexCards = [
   {
@@ -71,7 +70,7 @@ const interestOptions = [
 ];
 
 export default function SeedMembership() {
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'delivery_warning' | 'error'>('idle');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [interests, setInterests] = useState<string[]>([]);
@@ -88,18 +87,37 @@ export default function SeedMembership() {
     e.preventDefault();
     setFormState('submitting');
 
-    const { error } = await supabase
-      .from('seed_membership_waitlist')
-      .insert({ name, email: email.toLowerCase().trim(), interests, message, newsletter_consent: newsletterConsent });
+    try {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/seed-submit`;
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          interests,
+          message,
+          newsletter_consent: newsletterConsent,
+        }),
+      });
 
-    if (error) {
-      if (error.code === '23505') {
-        setFormState('success');
+      if (!res.ok) {
+        setFormState('error');
+        return;
+      }
+
+      const data = await res.json();
+      if (data.ok) {
+        if (data.delivery === 'unavailable' || data.delivery === 'uncertain') {
+          setFormState('delivery_warning');
+        } else {
+          setFormState('success');
+        }
       } else {
         setFormState('error');
       }
-    } else {
-      setFormState('success');
+    } catch {
+      setFormState('error');
     }
   };
 
@@ -360,11 +378,39 @@ export default function SeedMembership() {
                   <Sprout className="w-8 h-8 text-emerald-glow" />
                 </div>
                 <h3 className="font-display text-xl tracking-wider text-gradient-emerald mb-2">
-                  Thank you. Your seed has been planted.
+                  Check Your Email
                 </h3>
-                <p className="font-sacred text-moonlight-white/50 leading-relaxed">
-                  We will reach out when the Seed Membership ecosystem is ready for you.
+                <p className="font-body text-moonlight-white/50 leading-relaxed text-sm">
+                  We have sent a confirmation link to your email address.
+                  Please open it and press the Confirm button to complete your
+                  Seed access request. The link expires in 24 hours.
                 </p>
+              </motion.div>
+            </GlassCard>
+          ) : formState === 'delivery_warning' ? (
+            <GlassCard gold className="p-8 text-center">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="w-16 h-16 rounded-full bg-gold-sacred/10 flex items-center justify-center mx-auto mb-4">
+                  <Sprout className="w-8 h-8 text-gold-sacred" />
+                </div>
+                <h3 className="font-display text-xl tracking-wider text-gradient-gold mb-2">
+                  Request Saved
+                </h3>
+                <p className="font-body text-moonlight-white/50 leading-relaxed text-sm mb-4">
+                  Your Seed access request has been saved, but we were unable to
+                  send the confirmation email right now. Please try submitting
+                  again in a few minutes to receive your confirmation link.
+                </p>
+                <button
+                  onClick={() => setFormState('idle')}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gold-sacred/15 border border-gold-sacred/25 hover:bg-gold-sacred/25 transition-all font-display text-xs tracking-widest text-gold-sacred"
+                >
+                  Try Again
+                </button>
               </motion.div>
             </GlassCard>
           ) : (

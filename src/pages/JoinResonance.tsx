@@ -7,7 +7,6 @@ import SacredGeometry from '../components/SacredGeometry';
 import CymaticWaves from '../components/CymaticWaves';
 import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
-import { supabase } from '../lib/supabase';
 
 const tiers = [
   {
@@ -38,7 +37,7 @@ const tiers = [
 ];
 
 export default function JoinResonance() {
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'delivery_warning' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [newsletterConsent, setNewsletterConsent] = useState(false);
   const [communityConsent, setCommunityConsent] = useState(false);
@@ -51,25 +50,38 @@ export default function JoinResonance() {
     setFormState('submitting');
     setErrorMsg('');
 
-    const { error } = await supabase.from('email_subscribers').insert({
-      email: email.toLowerCase().trim(),
-      first_name: name,
-      source: 'join_page',
-      newsletter_consent: newsletterConsent,
-      community_events_consent: communityConsent,
-      // consent_timestamp is set by the database, not the browser, so the
-      // consent record cannot be backdated by a crafted request.
-    });
-
-    if (error) {
-      if (error.code === '23505') {
-        setFormState('success');
+    try {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/newsletter-submit`;
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          interest,
+          newsletter_consent: newsletterConsent,
+          community_events_consent: communityConsent,
+        }),
+      });
+      if (!res.ok) {
+        setFormState('error');
+        setErrorMsg('Something went wrong. Please try again.');
+        return;
+      }
+      const data = await res.json();
+      if (data.ok) {
+        if (data.delivery === 'unavailable' || data.delivery === 'uncertain') {
+          setFormState('delivery_warning');
+        } else {
+          setFormState('success');
+        }
       } else {
         setFormState('error');
         setErrorMsg('Something went wrong. Please try again.');
       }
-    } else {
-      setFormState('success');
+    } catch {
+      setFormState('error');
+      setErrorMsg('Something went wrong. Please try again.');
     }
   };
 
@@ -224,7 +236,51 @@ export default function JoinResonance() {
             subtitle="Begin with your name and email. The resonance will find you."
           />
 
-          {formState !== 'success' ? (
+          {formState === 'success' ? (
+            <GlassCard gold className="p-8 text-center">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="w-16 h-16 rounded-full bg-emerald-glow/10 flex items-center justify-center mx-auto mb-4">
+                  <Check className="w-8 h-8 text-emerald-glow" />
+                </div>
+                <h3 className="font-display text-xl tracking-wider text-gradient-emerald mb-2">
+                  Check Your Email
+                </h3>
+                <p className="font-body text-moonlight-white/50 text-sm leading-relaxed">
+                  We have sent a confirmation link to your email address.
+                  Please open it and press the Confirm button to complete your
+                  subscription. The link expires in 24 hours.
+                </p>
+              </motion.div>
+            </GlassCard>
+          ) : formState === 'delivery_warning' ? (
+            <GlassCard gold className="p-8 text-center">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="w-16 h-16 rounded-full bg-gold-sacred/10 flex items-center justify-center mx-auto mb-4">
+                  <Check className="w-8 h-8 text-gold-sacred" />
+                </div>
+                <h3 className="font-display text-xl tracking-wider text-gradient-gold mb-2">
+                  Request Saved
+                </h3>
+                <p className="font-body text-moonlight-white/50 text-sm leading-relaxed mb-4">
+                  Your details have been saved, but we had trouble sending the confirmation email. Please try again in a few minutes.
+                </p>
+                <button
+                  onClick={() => setFormState('idle')}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gold-sacred/15 border border-gold-sacred/25 hover:bg-gold-sacred/25 transition-all font-display text-xs tracking-widest text-gold-sacred"
+                >
+                  Try Again
+                </button>
+              </motion.div>
+            </GlassCard>
+          ) : (
             <GlassCard gold className="p-8">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -308,24 +364,6 @@ export default function JoinResonance() {
                   )}
                 </button>
               </form>
-            </GlassCard>
-          ) : (
-            <GlassCard gold className="p-8 text-center">
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="w-16 h-16 rounded-full bg-emerald-glow/10 flex items-center justify-center mx-auto mb-4">
-                  <Check className="w-8 h-8 text-emerald-glow" />
-                </div>
-                <h3 className="font-display text-xl tracking-wider text-gradient-emerald mb-2">
-                  Welcome to the Grid
-                </h3>
-                <p className="font-sacred text-moonlight-white/50 leading-relaxed">
-                  The resonance has received you. Watch for the first signal.
-                </p>
-              </motion.div>
             </GlassCard>
           )}
         </div>
