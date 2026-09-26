@@ -1,0 +1,30 @@
+.learning-page { max-width: 1180px; margin: 0 auto; padding: 8rem 1.25rem 7rem; font-size: 1rem; line-height: 1.75; color: #edf6ef; overflow-wrap: anywhere; }
+.learning-page h1, .learning-page h2, .learning-page h3 { line-height: 1.25; font-family: inherit; letter-spacing: normal; color: #f4e0a4; }
+.learning-page h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin: .75rem 0 1.25rem; }
+.learning-page h2 { font-size: 1.6rem; margin: 0 0 1rem; }
+.learning-page h3 { font-size: 1.2rem; margin: 0 0 .75rem; }
+.learning-page p { margin: .75rem 0; }
+.learning-page a { color: #adf0c9; text-decoration: underline; text-underline-offset: .25rem; }
+.learning-page a:focus-visible, .learning-page summary:focus-visible { outline: 3px solid #f4ce70; outline-offset: 5px; }
+.learning-nav { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-bottom: 2.5rem; }
+.learning-nav a { padding: .4rem 0; }
+.learning-header { max-width: 850px; margin-bottom: 2rem; }
+.learning-eyebrow, .learning-meta { color: #c4d7ca; font-size: 1rem; }
+.learning-notice { border-left: 3px solid #d4a843; padding: 1rem 1.5rem; background: #17291f; margin: 2rem 0; border-radius: 0 .6rem .6rem 0; }
+.learning-section { margin: 3rem 0; scroll-margin-top: 8rem; }
+.learning-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.25rem; }
+.learning-panel, .learning-card { padding: 1.5rem; border: 1px solid #42614b; border-radius: 1rem; background: rgba(9,28,20,.95); min-width: 0; }
+.learning-panel { margin: 2rem 0; }
+.learning-card { display: flex; flex-direction: column; }
+.learning-card > a:last-child { margin-top: auto; padding-top: .75rem; }
+.learning-page ul, .learning-page ol { padding-left: 1.4rem; list-style: revert; margin: 1rem 0; }
+.learning-page li { margin: .5rem 0; }
+.learning-page .learning-button { display: inline-block; padding: .7rem 1.1rem; margin: .5rem 0; border-radius: .5rem; background: #cceccf; color: #082115; text-decoration: none; font-weight: 700; }
+.learning-page .learning-small { font-size: 1rem; }
+.learning-facts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; margin: 2rem 0; }
+.learning-facts div { border-top: 1px solid #42614b; padding-top: 1rem; }
+.learning-facts dt { color: #c4d7ca; }
+.learning-facts dd { font-size: 1.3rem; font-weight: 700; }
+.learning-page details { margin-top: 1rem; }
+.learning-page summary { cursor: pointer; padding: .5rem 0; color: #adf0c9; }
+@media (max-width: 680px) { .learning-grid, .learning-facts { grid-template-columns: 1fr; } .learning-page { padding-top: 7rem; } .learning-panel, .learning-card { padding: 1.2rem; } }
