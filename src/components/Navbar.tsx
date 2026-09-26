@@ -29,6 +29,7 @@ const navLinks: NavLink[] = [
   { path: '/seed-membership', label: 'Seed', group: 'Membership' },
   { path: '/mycelium-membership', label: 'Mycelium', group: 'Membership' },
   { path: '/canopy-membership', label: 'Canopy', group: 'Membership' },
+  { path: '/teaching-fields', label: 'Teaching Fields', group: 'Membership' },
   { path: '/join', label: 'Join', group: 'Membership' },
   { path: '/members', label: 'Members', group: 'Membership' },
   { path: '/symbolic-keys', label: 'Symbolic Keys', group: 'Knowledge' },

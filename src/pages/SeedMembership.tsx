@@ -516,20 +516,19 @@ export default function SeedMembership() {
             <div className="w-12 h-12 rounded-xl bg-gold-sacred/10 flex items-center justify-center mx-auto mb-4">
               <Network className="w-6 h-6 text-gold-sacred" />
             </div>
-            <p className="font-sacred text-gold-sacred/60 text-xs tracking-widest mb-2">READY TO GO DEEPER?</p>
+            <p className="font-sacred text-gold-sacred/60 text-xs tracking-widest mb-2">LEARN WITH OTHERS</p>
             <h3 className="font-display text-2xl tracking-wider text-gradient-harvest mb-3">
-              Mycelium Membership
+              Mycelium — Learn Together
             </h3>
             <p className="font-body text-moonlight-white/45 text-sm leading-relaxed mb-6">
-              Continue deeper into the living network — weekly guided practices, New Moon Council access,
-              resource library, community events circle, and all Seed sections. $40 USD.
+              Explore optional online sessions and course bundles. Fees and dates will be confirmed for each offering; shared resources remain free for everyone.
             </p>
             <Link
               to="/mycelium-membership"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-display text-sm tracking-widest text-cosmic-black transition-all hover:scale-105"
               style={{ background: 'linear-gradient(135deg, #d4a843, #10b981)' }}
             >
-              Enter the Mycelium Network
+              Explore online courses
               <ArrowRight className="w-4 h-4" />
             </Link>
           </GlassCard>

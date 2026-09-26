@@ -112,6 +112,11 @@ const productEcosystem = [
 export default function MUSEschool() {
   return (
     <PageTransition>
+      <nav aria-label="Courses and teaching" className="pt-28 px-6 flex flex-wrap justify-center gap-6 text-moonlight-white/70 underline text-sm font-body">
+        <Link to="/mycelium-membership">Online sessions &amp; course bundles</Link>
+        <Link to="/canopy-membership">In-person facilitator programme</Link>
+        <Link to="/teaching-fields">Teaching fields &amp; specialists</Link>
+      </nav>
       {/* Hero */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black via-emerald-deep/15 to-cosmic-black" />

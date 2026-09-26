@@ -6,6 +6,9 @@ import LoadingScreen from './components/LoadingScreen';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 
+const LearningDetail = lazy(() => import('./pages/LearningDetail'));
+const TeachingFields = lazy(() => import('./pages/TeachingFields'));
+
 const Home = lazy(() => import('./pages/Home'));
 const Framework = lazy(() => import('./pages/Framework'));
 const Pillars = lazy(() => import('./pages/Pillars'));
@@ -55,6 +58,8 @@ function App() {
             <Route path="/phoenix" element={<PhoenixPrinciple />} />
             <Route path="/rhythmic-weave" element={<RhythmicWeave />} />
             <Route path="/garden" element={<ResonanceGarden />} />
+            <Route path="/learning/:slug" element={<LearningDetail />} />
+            <Route path="/teaching-fields" element={<TeachingFields />} />
             <Route path="/museschool" element={<MUSEschool />} />
             <Route path="/community" element={<Community />} />
             <Route path="/resources" element={<Resources />} />

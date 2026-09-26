@@ -10,6 +10,7 @@ import GlassCard from '../components/GlassCard';
 import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
 import MyceliumNetwork from '../components/MyceliumNetwork';
+import CoursePathway from '../components/learning/CoursePathway';
 
 const CANOPY_PRICE_USD = 100;
 
@@ -241,6 +242,13 @@ export default function CanopyMembership() {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Course Catalogue */}
+        <section className="relative pb-20 px-4">
+          <div className="max-w-5xl mx-auto">
+            <CoursePathway pathway="canopy" />
           </div>
         </section>
 

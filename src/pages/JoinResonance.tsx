@@ -9,31 +9,9 @@ import PageTransition from '../components/PageTransition';
 import SectionHeading from '../components/SectionHeading';
 
 const tiers = [
-  {
-    name: 'Seed',
-    price: 'Free',
-    desc: 'Begin your journey into the resonance.',
-    features: ['Access to the Codex', 'Monthly reflection emails', 'Community forum access', 'Portal Quiz'],
-    icon: TreePine,
-    color: 'emerald-glow',
-  },
-  {
-    name: 'Mycelium',
-    price: 'Monthly',
-    desc: 'Deepen your practice and connect with the grid.',
-    features: ['All Seed benefits', 'Weekly guided practices', 'New Moon Council access', 'Resource library', 'Community circles'],
-    icon: Users,
-    color: 'gold-sacred',
-    featured: true,
-  },
-  {
-    name: 'Canopy',
-    price: '$100 / month',
-    desc: 'Full immersion in the living framework.',
-    features: ['All Mycelium benefits', 'Annual Gathering access', '1-on-1 mentorship', 'Design Lab participation', 'Early access to all content', 'Honorary Founding Member recognition'],
-    icon: Zap,
-    color: 'cyan-glow',
-  },
+  { name: 'Seed', price: 'Free community', desc: 'Explore and belong. No payment or mandatory registration for published resources.', features: ['Shared workbooks and Codex', 'Maps and self-guided practices', 'Oracle and project knowledge', 'Equal community access'], icon: TreePine, color: 'emerald-glow' },
+  { name: 'Mycelium', price: 'Optional classes · Fees to be confirmed', desc: 'Learn together through live online sessions and course bundles.', features: ['Seven standalone session topics', 'Roots: 9 guided hours', 'Living Garden: 6 guided hours', 'Community Weave: 6 guided hours'], icon: Users, color: 'gold-sacred', featured: true },
+  { name: 'Canopy', price: 'Optional programme · Fee to be confirmed', desc: 'Practise and steward through in-person facilitator development.', features: ['Four proposed teaching days', '24 contact hours + 6 independent hours', 'Supervised micro-teaching and feedback', 'Internal, non-accredited completion record'], icon: Zap, color: 'cyan-glow' },
 ];
 
 export default function JoinResonance() {
