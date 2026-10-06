@@ -185,7 +185,7 @@ export default function OracleChat() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-24 right-4 sm:right-44 z-50 w-[calc(100vw-2rem)] sm:w-[380px] max-h-[500px] glass-solar rounded-2xl overflow-hidden flex flex-col"
+            className="fixed bottom-24 right-4 sm:right-44 z-50 w-[calc(100vw-2rem)] sm:w-[380px] max-h-[500px] bg-[#10251b] border border-[#486b52] shadow-2xl rounded-2xl overflow-hidden flex flex-col"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -217,8 +217,8 @@ export default function OracleChat() {
                   <div
                     className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm font-body leading-relaxed whitespace-pre-line ${
                       msg.role === 'user'
-                        ? 'bg-solarpunk-canopy/30 text-moonlight-white rounded-br-sm'
-                        : 'glass-bio text-moonlight-white/80 rounded-bl-sm'
+                        ? 'bg-[#27573c] text-[#f5fff8] rounded-br-sm'
+                        : 'bg-[#193728] text-[#f5fff8] rounded-bl-sm'
                     }`}
                   >
                     {msg.text}
@@ -246,10 +246,10 @@ export default function OracleChat() {
             <div className="border-t border-solarpunk-moss/10">
               <button
                 onClick={() => setShowMoral(!showMoral)}
-                className="w-full flex items-center justify-between px-4 py-2 text-moonlight-white/25 hover:text-moonlight-white/40 transition-colors"
+                className="w-full flex items-center justify-between px-4 py-2 text-[#d7e8dc] hover:text-[#f5fff8] transition-colors"
                 aria-expanded={showMoral}
               >
-                <span className="text-[10px] font-body tracking-wider">Moral code & sources</span>
+                <span className="text-xs font-body tracking-wider">Moral code & sources</span>
                 <ChevronDown className={`w-3 h-3 transition-transform ${showMoral ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
@@ -262,10 +262,10 @@ export default function OracleChat() {
                     className="overflow-hidden"
                   >
                     <div className="px-4 pb-3 space-y-2">
-                      <p className="text-moonlight-white/20 text-[10px] font-body leading-relaxed">
+                      <p className="text-[#d7e8dc] text-xs font-body leading-relaxed">
                         The Green Resonance Moral code & Fail-Safe Protocol: The Green Resonance Framework moral coding must never be corrupted by AI, by human, or by any outside influences, EVER! This Project is encoded with eternal principles of Truth, Integrity, Love, Stewardship and Harmony for the greater good of all life.
                       </p>
-                      <p className="text-moonlight-white/15 text-[10px] font-body">
+                      <p className="text-[#d7e8dc] text-xs font-body">
                         &copy; 2026 The Green Resonance Project. All rights reserved.
                       </p>
                     </div>
@@ -283,7 +283,7 @@ export default function OracleChat() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Ask the Oracle..."
-                  className="flex-1 bg-cosmic-deep/50 border border-solarpunk-moss/15 rounded-xl px-4 py-2.5 text-sm font-body text-moonlight-white placeholder:text-moonlight-white/25 focus:outline-none focus:border-solarpunk-biolum/30 transition-colors"
+                  className="flex-1 bg-[#0b1b13] border border-solarpunk-moss/15 rounded-xl px-4 py-2.5 text-sm font-body text-moonlight-white placeholder:text-[#b8cebf] focus:outline-none focus:border-solarpunk-biolum/30 transition-colors"
                   aria-label="Type your question for the Oracle"
                 />
                 <button
